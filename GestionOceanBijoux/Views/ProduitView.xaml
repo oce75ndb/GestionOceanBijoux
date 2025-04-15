@@ -170,15 +170,19 @@
                 </DataGridTextColumn>
 
                 <!-- Supprimer -->
-                <DataGridTextColumn Header="Supprimer" Width="150">
-                    <DataGridTextColumn.ElementStyle>
-                        <Style TargetType="TextBlock">
-                            <Setter Property="HorizontalAlignment" Value="Center"/>
-                            <Setter Property="VerticalAlignment" Value="Center"/>
-                            <Setter Property="TextAlignment" Value="Center"/>
-                        </Style>
-                    </DataGridTextColumn.ElementStyle>
-                </DataGridTextColumn>
+                <DataGridTemplateColumn Header="Supprimer" Width="100">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="🗑" 
+                    Background="#FFB3B3" 
+                    Foreground="Black" 
+                    Command="{Binding DataContext.SupprimerProduitCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}" 
+                    CommandParameter="{Binding}" 
+                    Padding="5" 
+                    ToolTip="Supprimer ce produit"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
 
             </DataGrid.Columns>
         </DataGrid>

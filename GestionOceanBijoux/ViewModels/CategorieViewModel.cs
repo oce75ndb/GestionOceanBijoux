@@ -2,6 +2,8 @@
 using GestionOceanBijoux.Services;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Windows;
+using System.Windows.Input;
 
 namespace GestionOceanBijoux.ViewModels
 {
@@ -16,10 +18,37 @@ namespace GestionOceanBijoux.ViewModels
             set { _categories = value; OnPropertyChanged(nameof(Categories)); }
         }
 
+        public ICommand SupprimerCategorieCommand { get; set; }
+
         public CategorieViewModel()
         {
             _apiService = new ApiService();
             Categories = new ObservableCollection<Categorie>();
+
+            SupprimerCategorieCommand = new RelayCommand(async (obj) =>
+            {
+                if (obj is Categorie categorie)
+                {
+                    var result = MessageBox.Show($"Es-tu sûre de vouloir supprimer la catégorie \"{categorie.categorie}\" ?",
+                                                 "Confirmation",
+                                                 MessageBoxButton.YesNo,
+                                                 MessageBoxImage.Warning);
+
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        bool success = await _apiService.DeleteCategorieAsync(categorie.id);
+                        if (success)
+                        {
+                            Categories.Remove(categorie);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Erreur lors de la suppression de la catégorie.", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+                    }
+                }
+            });
+
             LoadCategories();
         }
 

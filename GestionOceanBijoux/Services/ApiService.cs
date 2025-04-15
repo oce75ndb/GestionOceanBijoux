@@ -74,5 +74,35 @@ namespace GestionOceanBijoux.Services
                         throw new Exception("Erreur lors de la récupération ou de la désérialisation des catégories : " + ex.Message);
                     }
                 }
+
+                public async Task<bool> DeleteProduitAsync(int id)
+                {
+                    try
+                    {
+                        string apiUrl = $"http://127.0.0.1:8000/api/produits/{id}";
+                        HttpResponseMessage response = await client.DeleteAsync(apiUrl);
+
+                        return response.IsSuccessStatusCode;
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new Exception("Erreur lors de la suppression du produit : " + ex.Message);
+                    }
+                }
+
+                public async Task<bool> DeleteCategorieAsync(int id)
+                {
+                    try
+                    {
+                        string apiUrl = $"http://127.0.0.1:8000/api/categories/{id}";
+                        HttpResponseMessage response = await client.DeleteAsync(apiUrl);
+                        return response.IsSuccessStatusCode;
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new Exception("Erreur lors de la suppression de la catégorie : " + ex.Message);
+                    }
+                }
+
     }
 }
