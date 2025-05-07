@@ -25,7 +25,7 @@ namespace GestionOceanBijoux.Services
         {
             try
             {
-                string apiUrl = "http://127.0.0.1:8000/api/produits";
+                string apiUrl = "http://oceandebijoux.fr/api/produits";
                 HttpResponseMessage response = await client.GetAsync(apiUrl);
 
                 if (response.IsSuccessStatusCode)
@@ -49,7 +49,7 @@ namespace GestionOceanBijoux.Services
         {
             try
             {
-                string apiUrl = "http://127.0.0.1:8000/api/categories";
+                string apiUrl = "http://oceandebijoux.fr/api/categories";
                 HttpResponseMessage response = await client.GetAsync(apiUrl);
 
                 if (response.IsSuccessStatusCode)
@@ -73,7 +73,7 @@ namespace GestionOceanBijoux.Services
         {
             try
             {
-                string apiUrl = $"http://127.0.0.1:8000/api/produits/{id}";
+                string apiUrl = $"http://oceandebijoux.fr/api/produits/{id}";
                 HttpResponseMessage response = await client.DeleteAsync(apiUrl);
                 return response.IsSuccessStatusCode;
             }
@@ -87,7 +87,7 @@ namespace GestionOceanBijoux.Services
         {
             try
             {
-                string apiUrl = $"http://127.0.0.1:8000/api/categories/{id}";
+                string apiUrl = $"http://oceandebijoux.fr/api/categories/{id}";
                 HttpResponseMessage response = await client.DeleteAsync(apiUrl);
                 return response.IsSuccessStatusCode;
             }
@@ -101,7 +101,7 @@ namespace GestionOceanBijoux.Services
         {
             try
             {
-                string apiUrl = "http://127.0.0.1:8000/api/produits";
+                string apiUrl = "http://oceandebijoux.fr/api/produits";
                 var jsonContent = new StringContent(JsonSerializer.Serialize(produit), System.Text.Encoding.UTF8, "application/json");
                 HttpResponseMessage response = await client.PostAsync(apiUrl, jsonContent);
                 return response.IsSuccessStatusCode;
@@ -116,7 +116,7 @@ namespace GestionOceanBijoux.Services
         {
             try
             {
-                string apiUrl = "http://127.0.0.1:8000/api/categories";
+                string apiUrl = "http://oceandebijoux.fr/api/categories";
                 var jsonContent = new StringContent(JsonSerializer.Serialize(categorie), System.Text.Encoding.UTF8, "application/json");
                 HttpResponseMessage response = await client.PostAsync(apiUrl, jsonContent);
                 return response.IsSuccessStatusCode;
@@ -131,7 +131,7 @@ namespace GestionOceanBijoux.Services
         {
             try
             {
-                string apiUrl = $"http://127.0.0.1:8000/api/produits/{produit.id}";
+                string apiUrl = $"https://oceandebijoux.fr/api/produits{produit.id}";
                 var jsonContent = new StringContent(JsonSerializer.Serialize(produit), System.Text.Encoding.UTF8, "application/json");
                 HttpResponseMessage response = await client.PutAsync(apiUrl, jsonContent);
                 return response.IsSuccessStatusCode;
