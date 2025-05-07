@@ -18,7 +18,15 @@ namespace GestionOceanBijoux.ViewModels
             set { _categories = value; OnPropertyChanged(nameof(Categories)); }
         }
 
+        private string _nomCategorie;
+        public string NomCategorie
+        {
+            get => _nomCategorie;
+            set { _nomCategorie = value; OnPropertyChanged(nameof(NomCategorie)); }
+        }
+
         public ICommand SupprimerCategorieCommand { get; set; }
+        public ICommand AjouterCategorieCommand { get; set; }
 
         public CategorieViewModel()
         {
@@ -45,6 +53,25 @@ namespace GestionOceanBijoux.ViewModels
                         {
                             MessageBox.Show("Erreur lors de la suppression de la catégorie.", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
                         }
+                    }
+                }
+            });
+
+            AjouterCategorieCommand = new RelayCommand(async (obj) =>
+            {
+                if (!string.IsNullOrWhiteSpace(NomCategorie))
+                {
+                    var nouvelle = new Categorie { categorie = NomCategorie };
+                    bool success = await _apiService.AddCategorieAsync(nouvelle);
+                    if (success)
+                    {
+                        Categories.Add(nouvelle);
+                        MessageBox.Show("Catégorie ajoutée !");
+                        NomCategorie = "";
+                    }
+                    else
+                    {
+                        MessageBox.Show("Erreur lors de l'ajout de la catégorie.");
                     }
                 }
             });

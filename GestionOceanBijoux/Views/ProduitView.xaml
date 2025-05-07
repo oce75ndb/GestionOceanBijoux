@@ -12,13 +12,9 @@
 
     <Page.Resources>
         <SolidColorBrush x:Key="PrimaryBrush" Color="#D9C2A9"/>
-        <!-- beige rosé/doré -->
         <SolidColorBrush x:Key="SecondaryBrush" Color="#F5EFE6"/>
-        <!-- blanc cassé -->
         <SolidColorBrush x:Key="AccentBrush" Color="#412E20"/>
-        <!-- marron profond -->
         <SolidColorBrush x:Key="TextBrush" Color="#412E20"/>
-        <!-- texte -->
 
         <Style TargetType="DataGrid">
             <Setter Property="Background" Value="{StaticResource SecondaryBrush}" />
@@ -54,136 +50,50 @@
         </Style>
     </Page.Resources>
 
-
     <Grid>
-        <DataGrid ItemsSource="{Binding Produits}" Width="Auto" Height="Auto" Margin="20" AutoGenerateColumns="False" IsReadOnly="True">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- FORMULAIRE D'AJOUT -->
+        <Border Grid.Row="0" Background="{StaticResource SecondaryBrush}" Padding="20" Margin="20" CornerRadius="10">
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Width="400">
+                <TextBlock Text="Ajouter un nouveau produit" FontSize="16" FontWeight="Bold" Foreground="{StaticResource AccentBrush}" Margin="0,0,0,10" TextAlignment="Center"/>
+
+                <TextBlock Text="Nom du produit"/>
+                <TextBox Text="{Binding NomProduit, UpdateSourceTrigger=PropertyChanged}" Margin="0,5" Background="White"/>
+
+                <TextBlock Text="Prix (ex : 19.90)"/>
+                <TextBox Text="{Binding PrixProduit, UpdateSourceTrigger=PropertyChanged}" Margin="0,5" Background="White"/>
+
+                <TextBlock Text="Stock disponible"/>
+                <TextBox Text="{Binding StockProduit, UpdateSourceTrigger=PropertyChanged}" Margin="0,5" Background="White"/>
+
+                <Button Content="Ajouter le produit" Command="{Binding AjouterProduitCommand}" Background="{StaticResource PrimaryBrush}" Foreground="White" FontWeight="Bold" Padding="8" Margin="0,10,0,0" BorderThickness="0" Cursor="Hand"/>
+            </StackPanel>
+        </Border>
+
+        <!-- DATAGRID DES PRODUITS -->
+        <DataGrid Grid.Row="1" ItemsSource="{Binding Produits}" Width="Auto" Height="Auto" Margin="20" AutoGenerateColumns="False" IsReadOnly="True">
             <DataGrid.Columns>
-
-                <!-- Id -->
-                <DataGridTextColumn Header="Id" Binding="{Binding id}" Width="50">
-                    <DataGridTextColumn.ElementStyle>
-                        <Style TargetType="TextBlock">
-                            <Setter Property="HorizontalAlignment" Value="Center"/>
-                            <Setter Property="VerticalAlignment" Value="Center"/>
-                            <Setter Property="TextAlignment" Value="Center"/>
-                        </Style>
-                    </DataGridTextColumn.ElementStyle>
-                </DataGridTextColumn>
-
-                <!-- Nom -->
-                <DataGridTextColumn Header="Nom" Binding="{Binding nom}" Width="150">
-                    <DataGridTextColumn.ElementStyle>
-                        <Style TargetType="TextBlock">
-                            <Setter Property="HorizontalAlignment" Value="Center"/>
-                            <Setter Property="VerticalAlignment" Value="Center"/>
-                            <Setter Property="TextAlignment" Value="Center"/>
-                        </Style>
-                    </DataGridTextColumn.ElementStyle>
-                </DataGridTextColumn>
-
-                <!-- Prix -->
-                <DataGridTextColumn Header="Prix (€)" Binding="{Binding prix}" Width="80">
-                    <DataGridTextColumn.ElementStyle>
-                        <Style TargetType="TextBlock">
-                            <Setter Property="HorizontalAlignment" Value="Center"/>
-                            <Setter Property="VerticalAlignment" Value="Center"/>
-                            <Setter Property="TextAlignment" Value="Center"/>
-                        </Style>
-                    </DataGridTextColumn.ElementStyle>
-                </DataGridTextColumn>
-
-                <!-- Stock -->
-                <DataGridTextColumn Header="Stock" Binding="{Binding stock}" Width="60">
-                    <DataGridTextColumn.ElementStyle>
-                        <Style TargetType="TextBlock">
-                            <Setter Property="HorizontalAlignment" Value="Center"/>
-                            <Setter Property="VerticalAlignment" Value="Center"/>
-                            <Setter Property="TextAlignment" Value="Center"/>
-                        </Style>
-                    </DataGridTextColumn.ElementStyle>
-                </DataGridTextColumn>
-
-                <!-- Catégorie -->
-                <DataGridTextColumn Header="Catégorie" Binding="{Binding categorie_id}" Width="80">
-                    <DataGridTextColumn.ElementStyle>
-                        <Style TargetType="TextBlock">
-                            <Setter Property="HorizontalAlignment" Value="Center"/>
-                            <Setter Property="VerticalAlignment" Value="Center"/>
-                            <Setter Property="TextAlignment" Value="Center"/>
-                        </Style>
-                    </DataGridTextColumn.ElementStyle>
-                </DataGridTextColumn>
-
-                <!-- Matériau -->
-                <DataGridTextColumn Header="Matériau" Binding="{Binding materiau}" Width="100">
-                    <DataGridTextColumn.ElementStyle>
-                        <Style TargetType="TextBlock">
-                            <Setter Property="HorizontalAlignment" Value="Center"/>
-                            <Setter Property="VerticalAlignment" Value="Center"/>
-                            <Setter Property="TextAlignment" Value="Center"/>
-                        </Style>
-                    </DataGridTextColumn.ElementStyle>
-                </DataGridTextColumn>
-
-                <!-- Style -->
-                <DataGridTextColumn Header="Style" Binding="{Binding style}" Width="100">
-                    <DataGridTextColumn.ElementStyle>
-                        <Style TargetType="TextBlock">
-                            <Setter Property="HorizontalAlignment" Value="Center"/>
-                            <Setter Property="VerticalAlignment" Value="Center"/>
-                            <Setter Property="TextAlignment" Value="Center"/>
-                        </Style>
-                    </DataGridTextColumn.ElementStyle>
-                </DataGridTextColumn>
-
-                <!-- Dimensions -->
-                <DataGridTextColumn Header="Dimensions" Binding="{Binding dimensions}" Width="120">
-                    <DataGridTextColumn.ElementStyle>
-                        <Style TargetType="TextBlock">
-                            <Setter Property="HorizontalAlignment" Value="Center"/>
-                            <Setter Property="VerticalAlignment" Value="Center"/>
-                            <Setter Property="TextAlignment" Value="Center"/>
-                        </Style>
-                    </DataGridTextColumn.ElementStyle>
-                </DataGridTextColumn>
-
-                <!-- Fabrication -->
-                <DataGridTextColumn Header="Fabrication" Binding="{Binding fabrication}" Width="150">
-                    <DataGridTextColumn.ElementStyle>
-                        <Style TargetType="TextBlock">
-                            <Setter Property="HorizontalAlignment" Value="Center"/>
-                            <Setter Property="VerticalAlignment" Value="Center"/>
-                            <Setter Property="TextAlignment" Value="Center"/>
-                        </Style>
-                    </DataGridTextColumn.ElementStyle>
-                </DataGridTextColumn>
-
-                <!-- Modifier -->
-                <DataGridTextColumn Header="Modifier" Width="150">
-                    <DataGridTextColumn.ElementStyle>
-                        <Style TargetType="TextBlock">
-                            <Setter Property="HorizontalAlignment" Value="Center"/>
-                            <Setter Property="VerticalAlignment" Value="Center"/>
-                            <Setter Property="TextAlignment" Value="Center"/>
-                        </Style>
-                    </DataGridTextColumn.ElementStyle>
-                </DataGridTextColumn>
-
-                <!-- Supprimer -->
+                <DataGridTextColumn Header="Id" Binding="{Binding id}" Width="50"/>
+                <DataGridTextColumn Header="Nom" Binding="{Binding nom}" Width="150"/>
+                <DataGridTextColumn Header="Prix (€)" Binding="{Binding prix}" Width="80"/>
+                <DataGridTextColumn Header="Stock" Binding="{Binding stock}" Width="60"/>
+                <DataGridTextColumn Header="Catégorie" Binding="{Binding categorie_id}" Width="80"/>
+                <DataGridTextColumn Header="Matériau" Binding="{Binding materiau}" Width="100"/>
+                <DataGridTextColumn Header="Style" Binding="{Binding style}" Width="100"/>
+                <DataGridTextColumn Header="Dimensions" Binding="{Binding dimensions}" Width="120"/>
+                <DataGridTextColumn Header="Fabrication" Binding="{Binding fabrication}" Width="150"/>
+                <DataGridTextColumn Header="Modifier" Width="150"/>
                 <DataGridTemplateColumn Header="Supprimer" Width="100">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Content="🗑" 
-                    Background="#FFB3B3" 
-                    Foreground="Black" 
-                    Command="{Binding DataContext.SupprimerProduitCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}" 
-                    CommandParameter="{Binding}" 
-                    Padding="5" 
-                    ToolTip="Supprimer ce produit"/>
+                            <Button Content="🗑" Background="{StaticResource PrimaryBrush}" Foreground="{StaticResource TextBrush}" Command="{Binding DataContext.SupprimerProduitCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}" CommandParameter="{Binding}" Padding="5" ToolTip="Supprimer ce produit"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

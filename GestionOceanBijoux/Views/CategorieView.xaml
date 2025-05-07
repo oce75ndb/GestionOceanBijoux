@@ -9,16 +9,12 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="CategorieView">
-    
+
     <Page.Resources>
         <SolidColorBrush x:Key="PrimaryBrush" Color="#D9C2A9"/>
-        <!-- beige rosé/doré -->
         <SolidColorBrush x:Key="SecondaryBrush" Color="#F5EFE6"/>
-        <!-- blanc cassé -->
         <SolidColorBrush x:Key="AccentBrush" Color="#412E20"/>
-        <!-- marron profond -->
         <SolidColorBrush x:Key="TextBrush" Color="#412E20"/>
-        <!-- texte -->
 
         <Style TargetType="DataGrid">
             <Setter Property="Background" Value="{StaticResource SecondaryBrush}" />
@@ -54,81 +50,36 @@
         </Style>
     </Page.Resources>
 
-
     <Grid>
-        <DataGrid ItemsSource="{Binding Categories}" Width="Auto" Height="Auto" Margin="20" AutoGenerateColumns="False" IsReadOnly="True">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- FORMULAIRE D'AJOUT -->
+        <Border Grid.Row="0" Background="{StaticResource SecondaryBrush}" Padding="20" Margin="20" CornerRadius="10">
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Width="400">
+                <TextBlock Text="Ajouter une nouvelle catégorie" FontSize="16" FontWeight="Bold" Foreground="{StaticResource AccentBrush}" Margin="0,0,0,10" TextAlignment="Center"/>
+
+                <TextBlock Text="Nom de la catégorie"/>
+                <TextBox Text="{Binding NomCategorie, UpdateSourceTrigger=PropertyChanged}" Margin="0,5" Background="White"/>
+
+                <Button Content="Ajouter la catégorie" Command="{Binding AjouterCategorieCommand}" Background="{StaticResource PrimaryBrush}" Foreground="White" FontWeight="Bold" Padding="8" Margin="0,10,0,0" BorderThickness="0" Cursor="Hand"/>
+            </StackPanel>
+        </Border>
+
+        <!-- DATAGRID DES CATÉGORIES -->
+        <DataGrid Grid.Row="1" ItemsSource="{Binding Categories}" Width="Auto" Height="Auto" Margin="20" AutoGenerateColumns="False" IsReadOnly="True">
             <DataGrid.Columns>
-
-                <!-- Id -->
-                <DataGridTextColumn Header="Id" Binding="{Binding id}" Width="50">
-                    <DataGridTextColumn.ElementStyle>
-                        <Style TargetType="TextBlock">
-                            <Setter Property="HorizontalAlignment" Value="Center"/>
-                            <Setter Property="VerticalAlignment" Value="Center"/>
-                            <Setter Property="TextAlignment" Value="Center"/>
-                        </Style>
-                    </DataGridTextColumn.ElementStyle>
-                </DataGridTextColumn>
-
-                <!-- Nom de la catégorie -->
-                <DataGridTextColumn Header="Catégorie" Binding="{Binding categorie}" Width="200">
-                    <DataGridTextColumn.ElementStyle>
-                        <Style TargetType="TextBlock">
-                            <Setter Property="HorizontalAlignment" Value="Center"/>
-                            <Setter Property="VerticalAlignment" Value="Center"/>
-                            <Setter Property="TextAlignment" Value="Center"/>
-                        </Style>
-                    </DataGridTextColumn.ElementStyle>
-                </DataGridTextColumn>
-
-                <!-- Date de création -->
-                <DataGridTextColumn Header="Créée le" Binding="{Binding created_at}" Width="150">
-                    <DataGridTextColumn.ElementStyle>
-                        <Style TargetType="TextBlock">
-                            <Setter Property="HorizontalAlignment" Value="Center"/>
-                            <Setter Property="VerticalAlignment" Value="Center"/>
-                            <Setter Property="TextAlignment" Value="Center"/>
-                        </Style>
-                    </DataGridTextColumn.ElementStyle>
-                </DataGridTextColumn>
-
-                <!-- Date de mise à jour -->
-                <DataGridTextColumn Header="Modifiée le" Binding="{Binding updated_at}" Width="150">
-                    <DataGridTextColumn.ElementStyle>
-                        <Style TargetType="TextBlock">
-                            <Setter Property="HorizontalAlignment" Value="Center"/>
-                            <Setter Property="VerticalAlignment" Value="Center"/>
-                            <Setter Property="TextAlignment" Value="Center"/>
-                        </Style>
-                    </DataGridTextColumn.ElementStyle>
-                </DataGridTextColumn>
-
-                <!-- Modifier -->
-                <DataGridTextColumn Header="Modifier" Width="150">
-                    <DataGridTextColumn.ElementStyle>
-                        <Style TargetType="TextBlock">
-                            <Setter Property="HorizontalAlignment" Value="Center"/>
-                            <Setter Property="VerticalAlignment" Value="Center"/>
-                            <Setter Property="TextAlignment" Value="Center"/>
-                        </Style>
-                    </DataGridTextColumn.ElementStyle>
-                </DataGridTextColumn>
-
-                <!-- Supprimer -->
+                <DataGridTextColumn Header="Id" Binding="{Binding id}" Width="80"/>
+                <DataGridTextColumn Header="Nom de la catégorie" Binding="{Binding categorie}" Width="300"/>
                 <DataGridTemplateColumn Header="Supprimer" Width="100">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Content="🗑"
-                    Background="#FFB3B3"
-                    Foreground="Black"
-                    Padding="5"
-                    ToolTip="Supprimer cette catégorie"
-                    Command="{Binding DataContext.SupprimerCategorieCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
-                    CommandParameter="{Binding}" />
+                            <Button Content="🗑" Command="{Binding DataContext.SupprimerCategorieCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}" CommandParameter="{Binding}" Padding="5" ToolTip="Supprimer cette catégorie"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-
             </DataGrid.Columns>
         </DataGrid>
     </Grid>
