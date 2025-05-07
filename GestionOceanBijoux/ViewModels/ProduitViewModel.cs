@@ -9,46 +9,22 @@ namespace GestionOceanBijoux.ViewModels
 {
     public class ProduitViewModel : INotifyPropertyChanged
     {
-        private ApiService _apiService;
-        private ObservableCollection<Produit> _produits;
+        private readonly ApiService _apiService = new();
 
-        public ObservableCollection<Produit> Produits
-        {
-            get { return _produits; }
-            set { _produits = value; OnPropertyChanged(nameof(Produits)); }
-        }
+        public ObservableCollection<Produit> Produits { get; set; } = new();
 
-        // Champs pour le formulaire d'ajout
-        private string _nomProduit;
-        public string NomProduit
-        {
-            get => _nomProduit;
-            set { _nomProduit = value; OnPropertyChanged(nameof(NomProduit)); }
-        }
-
-        private string _prixProduit;
-        public string PrixProduit
-        {
-            get => _prixProduit;
-            set { _prixProduit = value; OnPropertyChanged(nameof(PrixProduit)); }
-        }
-
-        private int _stockProduit;
-        public int StockProduit
-        {
-            get => _stockProduit;
-            set { _stockProduit = value; OnPropertyChanged(nameof(StockProduit)); }
-        }
+        // Champs pour l'ajout
+        public string NomProduit { get; set; } = string.Empty;
+        public string PrixProduit { get; set; } = string.Empty;
+        public int StockProduit { get; set; }
 
         // Commandes
         public ICommand SupprimerProduitCommand { get; set; }
         public ICommand AjouterProduitCommand { get; set; }
+        public ICommand EnregistrerModificationsProduitCommand { get; set; }
 
         public ProduitViewModel()
         {
-            _apiService = new ApiService();
-            Produits = new ObservableCollection<Produit>();
-
             SupprimerProduitCommand = new RelayCommand(async (obj) =>
             {
                 if (obj is Produit produit)
@@ -75,12 +51,12 @@ namespace GestionOceanBijoux.ViewModels
 
             AjouterProduitCommand = new RelayCommand(async (obj) =>
             {
-                Produit nouveau = new Produit
+                Produit nouveau = new()
                 {
                     nom = NomProduit,
                     prix = PrixProduit,
                     stock = StockProduit,
-                    categorie_id = 1 // Change ça si tu veux sélectionner une catégorie
+                    categorie_id = 1 // à adapter si tu veux sélectionner une catégorie
                 };
 
                 bool success = await _apiService.AddProduitAsync(nouveau);
@@ -88,9 +64,12 @@ namespace GestionOceanBijoux.ViewModels
                 {
                     Produits.Add(nouveau);
                     MessageBox.Show("Produit ajouté avec succès !");
-                    NomProduit = "";
-                    PrixProduit = "";
+                    NomProduit = string.Empty;
+                    PrixProduit = string.Empty;
                     StockProduit = 0;
+                    OnPropertyChanged(nameof(NomProduit));
+                    OnPropertyChanged(nameof(PrixProduit));
+                    OnPropertyChanged(nameof(StockProduit));
                 }
                 else
                 {
@@ -98,7 +77,23 @@ namespace GestionOceanBijoux.ViewModels
                 }
             });
 
-            LoadProduits();
+            EnregistrerModificationsProduitCommand = new RelayCommand(async (obj) =>
+            {
+                if (obj is Produit produit)
+                {
+                    bool success = await _apiService.UpdateProduitAsync(produit);
+                    if (success)
+                    {
+                        MessageBox.Show("Modifications enregistrées avec succès !");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Erreur lors de la modification du produit.");
+                    }
+                }
+            });
+
+            _ = LoadProduits();
         }
 
         private async Task LoadProduits()
@@ -112,7 +107,7 @@ namespace GestionOceanBijoux.ViewModels
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         protected virtual void OnPropertyChanged(string propertyName)
         {

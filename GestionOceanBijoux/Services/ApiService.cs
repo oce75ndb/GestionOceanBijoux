@@ -21,7 +21,6 @@ namespace GestionOceanBijoux.Services
             };
         }
 
-        // Récupération des produits dans l'API
         public async Task<List<Produit>> GetProduitsAsync()
         {
             try
@@ -46,7 +45,6 @@ namespace GestionOceanBijoux.Services
             }
         }
 
-        // Récupération des catégories dans l'API
         public async Task<List<Categorie>> GetCategoriesAsync()
         {
             try
@@ -71,7 +69,6 @@ namespace GestionOceanBijoux.Services
             }
         }
 
-        // Suppression d'un produit
         public async Task<bool> DeleteProduitAsync(int id)
         {
             try
@@ -86,7 +83,6 @@ namespace GestionOceanBijoux.Services
             }
         }
 
-        // Suppression d'une catégorie
         public async Task<bool> DeleteCategorieAsync(int id)
         {
             try
@@ -101,7 +97,6 @@ namespace GestionOceanBijoux.Services
             }
         }
 
-        // Ajout d'un produit
         public async Task<bool> AddProduitAsync(Produit produit)
         {
             try
@@ -117,7 +112,6 @@ namespace GestionOceanBijoux.Services
             }
         }
 
-        // Ajout d'une catégorie
         public async Task<bool> AddCategorieAsync(Categorie categorie)
         {
             try
@@ -130,6 +124,21 @@ namespace GestionOceanBijoux.Services
             catch (Exception ex)
             {
                 throw new Exception("Erreur lors de l'ajout de la catégorie : " + ex.Message);
+            }
+        }
+
+        public async Task<bool> UpdateProduitAsync(Produit produit)
+        {
+            try
+            {
+                string apiUrl = $"http://127.0.0.1:8000/api/produits/{produit.id}";
+                var jsonContent = new StringContent(JsonSerializer.Serialize(produit), System.Text.Encoding.UTF8, "application/json");
+                HttpResponseMessage response = await client.PutAsync(apiUrl, jsonContent);
+                return response.IsSuccessStatusCode;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erreur lors de la modification du produit : " + ex.Message);
             }
         }
     }
