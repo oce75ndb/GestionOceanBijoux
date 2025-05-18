@@ -1,5 +1,6 @@
 ﻿using System.Net.Http;
 using System.Security.Policy;
+using System.Text;
 using System.Text.Json;
 using GestionOceanBijoux.Models;
 
@@ -115,19 +116,22 @@ namespace GestionOceanBijoux.Services
             }
         }
 
-        public async Task<bool> AddCategorieAsync(Categorie categorie)
+        public async Task<Categorie> AddCategorieAsync(Categorie categorie)
         {
-            try
+
+            string url = apiUrl + "/categories";
+            var jsonContent = new StringContent(JsonSerializer.Serialize(categorie), System.Text.Encoding.UTF8, "application/json");
+            HttpResponseMessage response = await client.PostAsync(url, jsonContent);
+
+            if (response.IsSuccessStatusCode)
             {
-                string url = apiUrl + "/categories";
-                var jsonContent = new StringContent(JsonSerializer.Serialize(categorie), System.Text.Encoding.UTF8, "application/json");
-                HttpResponseMessage response = await client.PostAsync(url, jsonContent);
-                return response.IsSuccessStatusCode;
+                var result = await response.Content.ReadAsStringAsync();
+                var createdCategorie = JsonSerializer.Deserialize<Categorie>(result);
+
+                return createdCategorie;
             }
-            catch (Exception ex)
-            {
-                throw new Exception("Erreur lors de l'ajout de la catégorie : " + ex.Message);
-            }
+            else
+                return null;
         }
 
         public async Task<bool> UpdateProduitAsync(Produit produit)

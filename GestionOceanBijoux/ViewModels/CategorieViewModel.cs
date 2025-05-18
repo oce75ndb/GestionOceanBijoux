@@ -62,17 +62,16 @@ namespace GestionOceanBijoux.ViewModels
                 if (!string.IsNullOrWhiteSpace(NomCategorie))
                 {
                     var nouvelle = new Categorie { categorie = NomCategorie };
-                    bool success = await _apiService.AddCategorieAsync(nouvelle);
-                    if (success)
+                    Categorie createdCategorie = await _apiService.AddCategorieAsync(nouvelle);
+
+                    if (createdCategorie != null)
                     {
-                        Categories.Add(nouvelle);
-                        MessageBox.Show("Catégorie ajoutée !");
+                        Categories.Add(createdCategorie);
+                        MessageBox.Show($"Catégorie ajoutée avec ID {createdCategorie.id} !");
                         NomCategorie = "";
                     }
                     else
-                    {
-                        MessageBox.Show("Erreur lors de l'ajout de la catégorie.");
-                    }
+                        MessageBox.Show("Erreur lors de l'ajout de la catégorie.");                   
                 }
             });
 
