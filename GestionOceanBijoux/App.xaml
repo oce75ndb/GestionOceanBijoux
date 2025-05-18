@@ -4,6 +4,46 @@
              xmlns:local="clr-namespace:GestionOceanBijoux"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+
+
+        <SolidColorBrush x:Key="PrimaryBrush" Color="#D9C2A9"/>
+        <SolidColorBrush x:Key="SecondaryBrush" Color="#F5EFE6"/>
+        <SolidColorBrush x:Key="AccentBrush" Color="#412E20"/>
+        <SolidColorBrush x:Key="TextBrush" Color="#412E20"/>
+
+        <Style TargetType="DataGrid">
+            <Setter Property="Background" Value="{StaticResource SecondaryBrush}" />
+            <Setter Property="Foreground" Value="{StaticResource TextBrush}" />
+            <Setter Property="FontFamily" Value="Segoe UI" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="BorderBrush" Value="{StaticResource PrimaryBrush}" />
+            <Setter Property="RowBackground" Value="{StaticResource PrimaryBrush}" />
+            <Setter Property="AlternatingRowBackground" Value="White" />
+            <Setter Property="GridLinesVisibility" Value="Vertical" />
+            <Setter Property="VerticalGridLinesBrush" Value="{StaticResource PrimaryBrush}" />
+            <Setter Property="HorizontalGridLinesBrush" Value="{StaticResource PrimaryBrush}" />
+        </Style>
+
+        <Style TargetType="DataGridColumnHeader">
+            <Setter Property="Background" Value="{StaticResource AccentBrush}" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="Height" Value="35"/>
+        </Style>
+
+        <Style TargetType="DataGridCell">
+            <Setter Property="Padding" Value="8"/>
+            <Setter Property="BorderBrush" Value="{StaticResource SecondaryBrush}"/>
+            <Setter Property="BorderThickness" Value="0,0,1,1"/>
+        </Style>
+
+        <Style TargetType="TextBlock">
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="Foreground" Value="{StaticResource TextBrush}" />
+        </Style>
+
+
     </Application.Resources>
 </Application>

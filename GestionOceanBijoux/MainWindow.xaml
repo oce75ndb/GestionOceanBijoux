@@ -8,12 +8,16 @@
         Title="MainWindow"
         Height="700" Width="1200">
     <Grid>
-        <StackPanel>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="4*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="0">
             <!--bouton produit-->
             <Button x:Name="ProduitBouton" Content="Produit" Click="Produit_Click"/>
             <!--bouton categorie-->
             <Button x:Name="CategorieBouton" Content="Categorie" Click="Categorie_Click"/>
         </StackPanel>
-        <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden" Navigated="MainFrame_Navigated"></Frame>
+        <Frame x:Name="MainFrame" Grid.Column="1" NavigationUIVisibility="Hidden" Navigated="MainFrame_Navigated"></Frame>
     </Grid>
 </Window>
