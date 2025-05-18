@@ -59,22 +59,20 @@ namespace GestionOceanBijoux.ViewModels
                     categorie_id = 1 // à adapter si tu veux sélectionner une catégorie
                 };
 
-                bool success = await _apiService.AddProduitAsync(nouveau);
-                if (success)
+                Produit createdProduit = await _apiService.AddProduitAsync(nouveau);
+                if (createdProduit!=null)
                 {
-                    Produits.Add(nouveau);
-                    MessageBox.Show("Produit ajouté avec succès !");
+                    Produits.Add(createdProduit);
+                    MessageBox.Show($"Produit ajouté avec ID {createdProduit.id} !");
                     NomProduit = string.Empty;
                     PrixProduit = string.Empty;
                     StockProduit = 0;
-                    OnPropertyChanged(nameof(NomProduit));
-                    OnPropertyChanged(nameof(PrixProduit));
-                    OnPropertyChanged(nameof(StockProduit));
+                    //OnPropertyChanged(nameof(NomProduit));
+                    //OnPropertyChanged(nameof(PrixProduit));
+                    //OnPropertyChanged(nameof(StockProduit));
                 }
                 else
-                {
                     MessageBox.Show("Erreur lors de l'ajout du produit.");
-                }
             });
 
             EnregistrerModificationsProduitCommand = new RelayCommand(async (obj) =>

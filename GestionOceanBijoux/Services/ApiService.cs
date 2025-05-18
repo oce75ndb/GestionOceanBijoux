@@ -101,19 +101,21 @@ namespace GestionOceanBijoux.Services
             }
         }
 
-        public async Task<bool> AddProduitAsync(Produit produit)
+        public async Task<Produit> AddProduitAsync(Produit produit)
         {
-            try
+            string url = apiUrl + "/produits";
+            var jsonContent = new StringContent(JsonSerializer.Serialize(produit), System.Text.Encoding.UTF8, "application/json");
+            HttpResponseMessage response = await client.PostAsync(url, jsonContent);
+            
+            if (response.IsSuccessStatusCode)
             {
-                string url = apiUrl + "/produits";
-                var jsonContent = new StringContent(JsonSerializer.Serialize(produit), System.Text.Encoding.UTF8, "application/json");
-                HttpResponseMessage response = await client.PostAsync(url, jsonContent);
-                return response.IsSuccessStatusCode;
+                var result = await response.Content.ReadAsStringAsync();
+                var createdProduit = JsonSerializer.Deserialize<Produit>(result);
+
+                return createdProduit;
             }
-            catch (Exception ex)
-            {
-                throw new Exception("Erreur lors de l'ajout du produit : " + ex.Message);
-            }
+            else
+                return null;
         }
 
         public async Task<Categorie> AddCategorieAsync(Categorie categorie)
