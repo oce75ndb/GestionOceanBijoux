@@ -1,4 +1,5 @@
 ﻿using System.Net.Http;
+using System.Security.Policy;
 using System.Text.Json;
 using GestionOceanBijoux.Models;
 
@@ -27,8 +28,8 @@ namespace GestionOceanBijoux.Services
         {
             try
             {
-                string apiUrl = "http://oceandebijoux.fr/api/produits";
-                HttpResponseMessage response = await client.GetAsync(apiUrl);
+                string url = apiUrl + "/produits";
+                HttpResponseMessage response = await client.GetAsync(url);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -51,8 +52,8 @@ namespace GestionOceanBijoux.Services
         {
             try
             {
-                string apiUrl = "http://oceandebijoux.fr/api/categories";
-                HttpResponseMessage response = await client.GetAsync(apiUrl);
+                string url = apiUrl + "/categories";
+                HttpResponseMessage response = await client.GetAsync(url);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -75,8 +76,8 @@ namespace GestionOceanBijoux.Services
         {
             try
             {
-                string apiUrl = $"http://oceandebijoux.fr/api/produits/{id}";
-                HttpResponseMessage response = await client.DeleteAsync(apiUrl);
+                string url = apiUrl + $"/produits/{id}";
+                HttpResponseMessage response = await client.DeleteAsync(url);
                 return response.IsSuccessStatusCode;
             }
             catch (Exception ex)
@@ -89,8 +90,8 @@ namespace GestionOceanBijoux.Services
         {
             try
             {
-                string apiUrl = $"http://oceandebijoux.fr/api/categories/{id}";
-                HttpResponseMessage response = await client.DeleteAsync(apiUrl);
+                string url = apiUrl + $"/categories/{id}";
+                HttpResponseMessage response = await client.DeleteAsync(url);
                 return response.IsSuccessStatusCode;
             }
             catch (Exception ex)
@@ -103,9 +104,9 @@ namespace GestionOceanBijoux.Services
         {
             try
             {
-                string apiUrl = "http://oceandebijoux.fr/api/produits";
+                string url = apiUrl + "/produits";
                 var jsonContent = new StringContent(JsonSerializer.Serialize(produit), System.Text.Encoding.UTF8, "application/json");
-                HttpResponseMessage response = await client.PostAsync(apiUrl, jsonContent);
+                HttpResponseMessage response = await client.PostAsync(url, jsonContent);
                 return response.IsSuccessStatusCode;
             }
             catch (Exception ex)
@@ -133,9 +134,9 @@ namespace GestionOceanBijoux.Services
         {
             try
             {
-                string apiUrl = $"https://oceandebijoux.fr/api/produits{produit.id}";
+                string url = apiUrl + $"/produits{produit.id}";
                 var jsonContent = new StringContent(JsonSerializer.Serialize(produit), System.Text.Encoding.UTF8, "application/json");
-                HttpResponseMessage response = await client.PutAsync(apiUrl, jsonContent);
+                HttpResponseMessage response = await client.PutAsync(url, jsonContent);
                 return response.IsSuccessStatusCode;
             }
             catch (Exception ex)
@@ -143,5 +144,21 @@ namespace GestionOceanBijoux.Services
                 throw new Exception("Erreur lors de la modification du produit : " + ex.Message);
             }
         }
+
+        public async Task<bool> UpdateCategoriesAsync(Produit categorie)
+        {
+            try
+            {
+                string url = apiUrl + $"/categories{categorie.id}";
+                var jsonContent = new StringContent(JsonSerializer.Serialize(categorie), System.Text.Encoding.UTF8, "application/json");
+                HttpResponseMessage response = await client.PutAsync(url, jsonContent);
+                return response.IsSuccessStatusCode;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erreur lors de la modification de la catégorie : " + ex.Message);
+            }
+        }
+
     }
 }
