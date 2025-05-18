@@ -7,6 +7,8 @@ namespace GestionOceanBijoux.Services
     public class ApiService
     {
         private static readonly HttpClient client;
+        //private string apiUrl = "http://oceandebijoux.fr/api";
+        private string apiUrl = "http://localhost:8000/api";
 
         static ApiService()
         {
@@ -116,9 +118,9 @@ namespace GestionOceanBijoux.Services
         {
             try
             {
-                string apiUrl = "http://oceandebijoux.fr/api/categories";
+                string url = apiUrl + "/categories";
                 var jsonContent = new StringContent(JsonSerializer.Serialize(categorie), System.Text.Encoding.UTF8, "application/json");
-                HttpResponseMessage response = await client.PostAsync(apiUrl, jsonContent);
+                HttpResponseMessage response = await client.PostAsync(url, jsonContent);
                 return response.IsSuccessStatusCode;
             }
             catch (Exception ex)
