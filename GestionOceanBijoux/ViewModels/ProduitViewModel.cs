@@ -34,6 +34,11 @@ namespace GestionOceanBijoux.ViewModels
         public string NomProduit { get; set; } = string.Empty;
         public string PrixProduit { get; set; } = string.Empty;
         public int StockProduit { get; set; }
+        public int CategorieId { get; set; }
+        public int StyleId { get; set; }
+        public int MateriauId { get; set; }
+        public int FabricationId { get; set; }
+
 
         // Commandes
         public ICommand SupprimerProduitCommand { get; set; }
@@ -73,7 +78,10 @@ namespace GestionOceanBijoux.ViewModels
                     nom = NomProduit,
                     prix = PrixProduit,
                     stock = StockProduit,
-                    categorie_id = 1 // à adapter si tu veux sélectionner une catégorie
+                    categorie_id = CategorieId,
+                    style_id = StyleId,
+                    materiau_id = MateriauId,
+                    fabrication_id = FabricationId
                 };
 
                 Produit createdProduit = await _apiService.AddProduitAsync(nouveau);
@@ -81,9 +89,15 @@ namespace GestionOceanBijoux.ViewModels
                 {
                     Produits.Add(createdProduit);
                     MessageBox.Show($"Produit ajouté avec ID {createdProduit.id} !");
+                    
+                    // Remise à 0 des champs
                     NomProduit = string.Empty;
                     PrixProduit = string.Empty;
                     StockProduit = 0;
+                    CategorieId = 0;
+                    StyleId = 0;
+                    MateriauId = 0;
+                    FabricationId = 0;
                     //OnPropertyChanged(nameof(NomProduit));
                     //OnPropertyChanged(nameof(PrixProduit));
                     //OnPropertyChanged(nameof(StockProduit));

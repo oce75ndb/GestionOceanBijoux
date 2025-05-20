@@ -17,6 +17,12 @@
             <Button x:Name="ProduitBouton" Content="Produit" Click="Produit_Click"/>
             <!--bouton categorie-->
             <Button x:Name="CategorieBouton" Content="Categorie" Click="Categorie_Click"/>
+            <!--bouton style-->
+            <Button x:Name="StyleBouton" Content="Style" Click="Style_Click"/>
+            <!--bouton matériau-->
+            <Button x:Name="MateriauBouton" Content="Materiau" Click="Materiau_Click"/>
+            <!--bouton fabrication-->
+            <Button x:Name="FabricationBouton" Content="Fabrication" Click="Fabrication_Click"/>
         </StackPanel>
         <Frame x:Name="MainFrame" Grid.Column="1" NavigationUIVisibility="Hidden" Navigated="MainFrame_Navigated"></Frame>
     </Grid>

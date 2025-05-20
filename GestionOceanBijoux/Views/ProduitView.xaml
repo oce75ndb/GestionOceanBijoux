@@ -35,17 +35,17 @@
                             <TextBlock Text="Stock disponible"/>
                             <TextBox Text="{Binding StockProduit, UpdateSourceTrigger=PropertyChanged}" Background="White" Margin="0,5"/>
                             <TextBlock Text="Catégorie"/>
-                            <ComboBox Background="White" Margin="0,5"/>
+                            <ComboBox ItemsSource="{Binding Categories, Mode=OneWay}" DisplayMemberPath="categorie" SelectedValuePath="id" SelectedValue="{Binding CategorieId, UpdateSourceTrigger=PropertyChanged}" Background="White" Margin="0,5"/>
                         </StackPanel>
                         <StackPanel Grid.Column="1" Margin="5">
                             <TextBlock Text="Matériau"/>
-                            <ComboBox Background="White" Margin="0,5"/>
+                            <ComboBox ItemsSource="{Binding Materiaux, Mode=OneWay}" DisplayMemberPath="materiau" SelectedValuePath="id" SelectedValue="{Binding MateriauId, UpdateSourceTrigger=PropertyChanged}" Background="White" Margin="0,5"/>
                             <TextBlock Text="Style"/>
-                            <ComboBox Background="White" Margin="0,5"/>
+                            <ComboBox ItemsSource="{Binding Styles, Mode=OneWay}" DisplayMemberPath="style" SelectedValuePath="id" SelectedValue="{Binding StyleId, UpdateSourceTrigger=PropertyChanged}" Background="White" Margin="0,5"/>
                             <TextBlock Text="Dimensions"/>
                             <TextBox Text="{Binding StockProduit, UpdateSourceTrigger=PropertyChanged}" Background="White" Margin="0,5"/>
                             <TextBlock Text="Fabrication"/>
-                            <ComboBox Background="White" Margin="0,5"/>
+                            <ComboBox ItemsSource="{Binding Fabrications, Mode=OneWay}" DisplayMemberPath="fabrication" SelectedValuePath="id" SelectedValue="{Binding FabricationId, UpdateSourceTrigger=PropertyChanged}" Background="White" Margin="0,5"/>
                         </StackPanel>
                     </Grid>
                     <Button Content="Ajouter le produit" Command="{Binding AjouterProduitCommand}" Background="{StaticResource PrimaryBrush}" Foreground="White" FontWeight="Bold" Padding="8" Margin="0,10,0,0"/>

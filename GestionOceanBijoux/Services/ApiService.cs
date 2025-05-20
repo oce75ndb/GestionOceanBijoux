@@ -25,6 +25,7 @@ namespace GestionOceanBijoux.Services
             };
         }
 
+        // Produits
         public async Task<List<Produit>> GetProduitsAsync()
         {
             try
@@ -48,7 +49,51 @@ namespace GestionOceanBijoux.Services
                 throw new Exception("Erreur lors de la récupération ou de la désérialisation des produits : " + ex.Message);
             }
         }
+        public async Task<Produit> AddProduitAsync(Produit produit)
+        {
+            string url = apiUrl + "/produits";
+            var jsonContent = new StringContent(JsonSerializer.Serialize(produit), System.Text.Encoding.UTF8, "application/json");
+            HttpResponseMessage response = await client.PostAsync(url, jsonContent);
 
+            if (response.IsSuccessStatusCode)
+            {
+                var result = await response.Content.ReadAsStringAsync();
+                var createdProduit = JsonSerializer.Deserialize<Produit>(result);
+
+                return createdProduit;
+            }
+            else
+                return null;
+        }
+        public async Task<bool> UpdateProduitAsync(Produit produit)
+        {
+            try
+            {
+                string url = apiUrl + $"/produits{produit.id}";
+                var jsonContent = new StringContent(JsonSerializer.Serialize(produit), System.Text.Encoding.UTF8, "application/json");
+                HttpResponseMessage response = await client.PutAsync(url, jsonContent);
+                return response.IsSuccessStatusCode;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erreur lors de la modification du produit : " + ex.Message);
+            }
+        }
+        public async Task<bool> DeleteProduitAsync(int id)
+        {
+            try
+            {
+                string url = apiUrl + $"/produits/{id}";
+                HttpResponseMessage response = await client.DeleteAsync(url);
+                return response.IsSuccessStatusCode;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erreur lors de la suppression du produit : " + ex.Message);
+            }
+        }
+
+        // Catégories
         public async Task<List<Categorie>> GetCategoriesAsync()
         {
             try
@@ -72,7 +117,52 @@ namespace GestionOceanBijoux.Services
                 throw new Exception("Erreur lors de la récupération ou de la désérialisation des catégories : " + ex.Message);
             }
         }
+        public async Task<Categorie> AddCategorieAsync(Categorie categorie)
+        {
 
+            string url = apiUrl + "/categories";
+            var jsonContent = new StringContent(JsonSerializer.Serialize(categorie), System.Text.Encoding.UTF8, "application/json");
+            HttpResponseMessage response = await client.PostAsync(url, jsonContent);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var result = await response.Content.ReadAsStringAsync();
+                var createdCategorie = JsonSerializer.Deserialize<Categorie>(result);
+
+                return createdCategorie;
+            }
+            else
+                return null;
+        }
+        public async Task<bool> UpdateCategoriesAsync(Produit categorie)
+        {
+            try
+            {
+                string url = apiUrl + $"/categories{categorie.id}";
+                var jsonContent = new StringContent(JsonSerializer.Serialize(categorie), System.Text.Encoding.UTF8, "application/json");
+                HttpResponseMessage response = await client.PutAsync(url, jsonContent);
+                return response.IsSuccessStatusCode;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erreur lors de la modification de la catégorie : " + ex.Message);
+            }
+        }
+        public async Task<bool> DeleteCategorieAsync(int id)
+        {
+            try
+            {
+                string url = apiUrl + $"/categories/{id}";
+                HttpResponseMessage response = await client.DeleteAsync(url);
+                return response.IsSuccessStatusCode;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erreur lors de la suppression de la catégorie : " + ex.Message);
+            }
+        }
+
+        // Styles
         public async Task<List<Style>> GetStylesAsync()
         {
             try
@@ -96,7 +186,38 @@ namespace GestionOceanBijoux.Services
                 throw new Exception("Erreur lors de la récupération ou de la désérialisation des styles : " + ex.Message);
             }
         }
+        public async Task<Style> AddStyleAsync(Style style)
+        {
 
+            string url = apiUrl + "/styles";
+            var jsonContent = new StringContent(JsonSerializer.Serialize(style), System.Text.Encoding.UTF8, "application/json");
+            HttpResponseMessage response = await client.PostAsync(url, jsonContent);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var result = await response.Content.ReadAsStringAsync();
+                var createdStyle = JsonSerializer.Deserialize<Style>(result);
+
+                return createdStyle;
+            }
+            else
+                return null;
+        }
+        public async Task<bool> DeleteStyleAsync(int id)
+        {
+            try
+            {
+                string url = apiUrl + $"/styles/{id}";
+                HttpResponseMessage response = await client.DeleteAsync(url);
+                return response.IsSuccessStatusCode;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erreur lors de la suppression du style : " + ex.Message);
+            }
+        }
+
+        // Matgériaux
         public async Task<List<Materiau>> GetMateriauxAsync()
         {
             try
@@ -120,7 +241,38 @@ namespace GestionOceanBijoux.Services
                 throw new Exception("Erreur lors de la récupération ou de la désérialisation des matériaux : " + ex.Message);
             }
         }
+        public async Task<Materiau> AddMateriauAsync(Materiau materiau)
+        {
 
+            string url = apiUrl + "/materiaux";
+            var jsonContent = new StringContent(JsonSerializer.Serialize(materiau), System.Text.Encoding.UTF8, "application/json");
+            HttpResponseMessage response = await client.PostAsync(url, jsonContent);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var result = await response.Content.ReadAsStringAsync();
+                var createdMateriau = JsonSerializer.Deserialize<Materiau>(result);
+
+                return createdMateriau;
+            }
+            else
+                return null;
+        }
+        public async Task<bool> DeleteMateriauAsync(int id)
+        {
+            try
+            {
+                string url = apiUrl + $"/materiaux/{id}";
+                HttpResponseMessage response = await client.DeleteAsync(url);
+                return response.IsSuccessStatusCode;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erreur lors de la suppression du matériau : " + ex.Message);
+            }
+        }
+
+        // FAbrications
         public async Task<List<Fabrication>> GetFabricationsAsync()
         {
             try
@@ -144,97 +296,34 @@ namespace GestionOceanBijoux.Services
                 throw new Exception("Erreur lors de la récupération ou de la désérialisation des fabrications : " + ex.Message);
             }
         }
-
-        public async Task<bool> DeleteProduitAsync(int id)
-        {
-            try
-            {
-                string url = apiUrl + $"/produits/{id}";
-                HttpResponseMessage response = await client.DeleteAsync(url);
-                return response.IsSuccessStatusCode;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Erreur lors de la suppression du produit : " + ex.Message);
-            }
-        }
-
-        public async Task<bool> DeleteCategorieAsync(int id)
-        {
-            try
-            {
-                string url = apiUrl + $"/categories/{id}";
-                HttpResponseMessage response = await client.DeleteAsync(url);
-                return response.IsSuccessStatusCode;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Erreur lors de la suppression de la catégorie : " + ex.Message);
-            }
-        }
-
-        public async Task<Produit> AddProduitAsync(Produit produit)
-        {
-            string url = apiUrl + "/produits";
-            var jsonContent = new StringContent(JsonSerializer.Serialize(produit), System.Text.Encoding.UTF8, "application/json");
-            HttpResponseMessage response = await client.PostAsync(url, jsonContent);
-            
-            if (response.IsSuccessStatusCode)
-            {
-                var result = await response.Content.ReadAsStringAsync();
-                var createdProduit = JsonSerializer.Deserialize<Produit>(result);
-
-                return createdProduit;
-            }
-            else
-                return null;
-        }
-
-        public async Task<Categorie> AddCategorieAsync(Categorie categorie)
+        public async Task<Fabrication> AddFabricationAsync(Fabrication fabrication)
         {
 
-            string url = apiUrl + "/categories";
-            var jsonContent = new StringContent(JsonSerializer.Serialize(categorie), System.Text.Encoding.UTF8, "application/json");
+            string url = apiUrl + "/fabrications";
+            var jsonContent = new StringContent(JsonSerializer.Serialize(fabrication), System.Text.Encoding.UTF8, "application/json");
             HttpResponseMessage response = await client.PostAsync(url, jsonContent);
 
             if (response.IsSuccessStatusCode)
             {
                 var result = await response.Content.ReadAsStringAsync();
-                var createdCategorie = JsonSerializer.Deserialize<Categorie>(result);
+                var createdFabrication = JsonSerializer.Deserialize<Fabrication>(result);
 
-                return createdCategorie;
+                return createdFabrication;
             }
             else
                 return null;
         }
-
-        public async Task<bool> UpdateProduitAsync(Produit produit)
+        public async Task<bool> DeleteFabricationAsync(int id)
         {
             try
             {
-                string url = apiUrl + $"/produits{produit.id}";
-                var jsonContent = new StringContent(JsonSerializer.Serialize(produit), System.Text.Encoding.UTF8, "application/json");
-                HttpResponseMessage response = await client.PutAsync(url, jsonContent);
+                string url = apiUrl + $"/fabrications/{id}";
+                HttpResponseMessage response = await client.DeleteAsync(url);
                 return response.IsSuccessStatusCode;
             }
             catch (Exception ex)
             {
-                throw new Exception("Erreur lors de la modification du produit : " + ex.Message);
-            }
-        }
-
-        public async Task<bool> UpdateCategoriesAsync(Produit categorie)
-        {
-            try
-            {
-                string url = apiUrl + $"/categories{categorie.id}";
-                var jsonContent = new StringContent(JsonSerializer.Serialize(categorie), System.Text.Encoding.UTF8, "application/json");
-                HttpResponseMessage response = await client.PutAsync(url, jsonContent);
-                return response.IsSuccessStatusCode;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Erreur lors de la modification de la catégorie : " + ex.Message);
+                throw new Exception("Erreur lors de la suppression de la fabrication : " + ex.Message);
             }
         }
 

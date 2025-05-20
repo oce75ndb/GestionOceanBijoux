@@ -25,17 +25,26 @@ namespace GestionOceanBijoux
         public void Produit_Click(object sender, RoutedEventArgs e)
         {
             MainFrame.Navigate(new ProduitView());
-            //MainFrame.NavigationService.RemoveBackEntry();
-            //ResetButtonState();
-            //((Button)sender).IsEnabled = false;
         }
 
         public void Categorie_Click(object sender, RoutedEventArgs e)
         {
             MainFrame.Navigate(new CategorieView());
-            //MainFrame.NavigationService.RemoveBackEntry();
-            //ResetButtonState();
-            //((Button)sender).IsEnabled = false;
+        }
+
+        public void Style_Click(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Navigate(new StyleView());
+        }
+
+        public void Materiau_Click(object sender, RoutedEventArgs e)
+        {
+            //MainFrame.Navigate(new MateriauView());
+        }
+
+        public void Fabrication_Click(object sender, RoutedEventArgs e)
+        {
+            //MainFrame.Navigate(new FabricationView());
         }
 
         private void ResetButtonState()
