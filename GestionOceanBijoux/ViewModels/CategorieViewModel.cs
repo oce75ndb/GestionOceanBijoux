@@ -9,6 +9,19 @@ namespace GestionOceanBijoux.ViewModels
 {
     public class CategorieViewModel : INotifyPropertyChanged
     {
+
+        private bool _isLoading;
+        public bool IsLoading
+        {
+            get => _isLoading;
+            set
+            {
+                _isLoading = value;
+                OnPropertyChanged(nameof(IsLoading));
+            }
+        }
+
+
         private ApiService _apiService;
         private ObservableCollection<Categorie> _categories;
 
@@ -80,6 +93,7 @@ namespace GestionOceanBijoux.ViewModels
 
         private async Task LoadCategories()
         {
+            IsLoading = true;
             var categorieList = await _apiService.GetCategoriesAsync();
             categorieList = categorieList.Distinct().ToList();
             Categories.Clear();
@@ -87,6 +101,7 @@ namespace GestionOceanBijoux.ViewModels
             {
                 Categories.Add(categorie);
             }
+            IsLoading = false;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

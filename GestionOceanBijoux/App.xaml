@@ -2,10 +2,12 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:GestionOceanBijoux"
+             xmlns:helpers="clr-namespace:DogsitterCRUD.Helpers"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-
-
+        
+        <helpers:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+        
         <SolidColorBrush x:Key="PrimaryBrush" Color="#D9C2A9"/>
         <SolidColorBrush x:Key="SecondaryBrush" Color="#F5EFE6"/>
         <SolidColorBrush x:Key="AccentBrush" Color="#412E20"/>
@@ -44,6 +46,17 @@
             <Setter Property="Foreground" Value="{StaticResource TextBrush}" />
         </Style>
 
+        <Style TargetType="TextBox">
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="Height" Value="25" />
+            <Setter Property="Foreground" Value="{StaticResource TextBrush}" />
+        </Style>
+
+        <Style TargetType="ComboBox">
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="Height" Value="25" />
+            <Setter Property="Foreground" Value="{StaticResource TextBrush}" />
+        </Style>
 
     </Application.Resources>
 </Application>

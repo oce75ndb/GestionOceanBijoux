@@ -4,14 +4,31 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
 using System.Windows;
+using Style = GestionOceanBijoux.Models.Style;
 
 namespace GestionOceanBijoux.ViewModels
 {
     public class ProduitViewModel : INotifyPropertyChanged
     {
+
+        private bool _isLoading;
+        public bool IsLoading
+        {
+            get => _isLoading;
+            set
+            {
+                _isLoading = value;
+                OnPropertyChanged(nameof(IsLoading));
+            }
+        }
+
         private readonly ApiService _apiService = new();
 
         public ObservableCollection<Produit> Produits { get; set; } = new();
+        public List<Categorie> Categories { get; set; } = new();
+        public List<Style> Styles { get; set; } = new();
+        public List<Materiau> Materiaux { get; set; } = new();
+        public List<Fabrication> Fabrications { get; set; } = new();
 
         // Champs pour l'ajout
         public string NomProduit { get; set; } = string.Empty;
@@ -91,11 +108,14 @@ namespace GestionOceanBijoux.ViewModels
                 }
             });
 
-            _ = LoadProduits();
+
+            _ = LoadData();
+
         }
 
-        private async Task LoadProduits()
+        private async Task LoadData()
         {
+            IsLoading = true;
             var produitlist = await _apiService.GetProduitsAsync();
             produitlist = produitlist.Distinct().ToList();
             Produits.Clear();
@@ -103,6 +123,39 @@ namespace GestionOceanBijoux.ViewModels
             {
                 Produits.Add(produit);
             }
+
+            var categorieslist = await _apiService.GetCategoriesAsync();
+            categorieslist = categorieslist.Distinct().ToList();
+            Categories.Clear();
+            foreach (var categorie in categorieslist)
+            {
+                Categories.Add(categorie);
+            }
+
+            var styleslist = await _apiService.GetStylesAsync();
+            styleslist = styleslist.Distinct().ToList();
+            Styles.Clear();
+            foreach (var style in styleslist)
+            {
+                Styles.Add(style);
+            }
+
+            var materiauxlist = await _apiService.GetMateriauxAsync();
+            materiauxlist = materiauxlist.Distinct().ToList();
+            Materiaux.Clear();
+            foreach (var materiau in materiauxlist)
+            {
+                Materiaux.Add(materiau);
+            }
+
+            var fabricationslist = await _apiService.GetFabricationsAsync();
+            fabricationslist = fabricationslist.Distinct().ToList();
+            Fabrications.Clear();
+            foreach (var fabrication in fabricationslist)
+            {
+                Fabrications.Add(fabrication);
+            }
+            IsLoading = false;
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

@@ -73,6 +73,78 @@ namespace GestionOceanBijoux.Services
             }
         }
 
+        public async Task<List<Style>> GetStylesAsync()
+        {
+            try
+            {
+                string url = apiUrl + "/styles";
+                HttpResponseMessage response = await client.GetAsync(url);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string jsonString = await response.Content.ReadAsStringAsync();
+                    List<Style>? styles = JsonSerializer.Deserialize<List<Style>>(jsonString);
+                    return styles ?? new List<Style>();
+                }
+                else
+                {
+                    throw new Exception($"Erreur {response.StatusCode} : {response.ReasonPhrase}");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erreur lors de la récupération ou de la désérialisation des styles : " + ex.Message);
+            }
+        }
+
+        public async Task<List<Materiau>> GetMateriauxAsync()
+        {
+            try
+            {
+                string url = apiUrl + "/materiaux";
+                HttpResponseMessage response = await client.GetAsync(url);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string jsonString = await response.Content.ReadAsStringAsync();
+                    List<Materiau>? materiaux = JsonSerializer.Deserialize<List<Materiau>>(jsonString);
+                    return materiaux ?? new List<Materiau>();
+                }
+                else
+                {
+                    throw new Exception($"Erreur {response.StatusCode} : {response.ReasonPhrase}");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erreur lors de la récupération ou de la désérialisation des matériaux : " + ex.Message);
+            }
+        }
+
+        public async Task<List<Fabrication>> GetFabricationsAsync()
+        {
+            try
+            {
+                string url = apiUrl + "/fabrications";
+                HttpResponseMessage response = await client.GetAsync(url);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string jsonString = await response.Content.ReadAsStringAsync();
+                    List<Fabrication>? fabrications = JsonSerializer.Deserialize<List<Fabrication>>(jsonString);
+                    return fabrications ?? new List<Fabrication>();
+                }
+                else
+                {
+                    throw new Exception($"Erreur {response.StatusCode} : {response.ReasonPhrase}");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erreur lors de la récupération ou de la désérialisation des fabrications : " + ex.Message);
+            }
+        }
+
         public async Task<bool> DeleteProduitAsync(int id)
         {
             try
