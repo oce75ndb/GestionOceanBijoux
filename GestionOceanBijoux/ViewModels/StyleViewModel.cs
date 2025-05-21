@@ -85,7 +85,7 @@ namespace GestionOceanBijoux.ViewModels
                         Style = "";
                     }
                     else
-                        MessageBox.Show("Erreur lors de l'ajout de la catégorie.");                   
+                        MessageBox.Show("Erreur lors de l'ajout du style.");                   
                 }
             });
 

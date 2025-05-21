@@ -39,12 +39,12 @@ namespace GestionOceanBijoux
 
         public void Materiau_Click(object sender, RoutedEventArgs e)
         {
-            //MainFrame.Navigate(new MateriauView());
+            MainFrame.Navigate(new MateriauView());
         }
 
         public void Fabrication_Click(object sender, RoutedEventArgs e)
         {
-            //MainFrame.Navigate(new FabricationView());
+            MainFrame.Navigate(new FabricationView());
         }
 
         private void ResetButtonState()
