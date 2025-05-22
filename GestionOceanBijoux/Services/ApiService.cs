@@ -1,16 +1,17 @@
-﻿using System.Net.Http;
-using System.Security.Policy;
-using System.Text;
+﻿using GestionOceanBijoux.Models;
+using System.Configuration;
+using System.Net.Http;
 using System.Text.Json;
-using GestionOceanBijoux.Models;
 
 namespace GestionOceanBijoux.Services
 {
     public class ApiService
     {
         private static readonly HttpClient client;
-        //private string apiUrl = "http://oceandebijoux.fr/api";
-        private string apiUrl = "http://localhost:8000/api";
+
+        public static readonly string apiUrl = ConfigurationManager.AppSettings["api_url"]
+            ?? throw new ArgumentNullException(nameof(apiUrl), "L'URL de l'API est introuvable dans app.config.");
+
 
         static ApiService()
         {
@@ -217,7 +218,7 @@ namespace GestionOceanBijoux.Services
             }
         }
 
-        // Matgériaux
+        // Matériaux
         public async Task<List<Materiau>> GetMateriauxAsync()
         {
             try
@@ -272,7 +273,7 @@ namespace GestionOceanBijoux.Services
             }
         }
 
-        // FAbrications
+        // Fabrications
         public async Task<List<Fabrication>> GetFabricationsAsync()
         {
             try

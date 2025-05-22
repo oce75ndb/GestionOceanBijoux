@@ -32,6 +32,7 @@ namespace GestionOceanBijoux.ViewModels
             set { _fabricationx = value; OnPropertyChanged(nameof(Fabrication)); }
         }
 
+        // Pour ajouter
         private string _fabrication;
         public string Fabrication
         {
@@ -89,12 +90,13 @@ namespace GestionOceanBijoux.ViewModels
                 }
             });
 
-            LoadFabrications();
+            _ = LoadFabrications();
         }
 
         private async Task LoadFabrications()
         {
             IsLoading = true;
+
             var fabricationxList = await _apiService.GetFabricationsAsync();
             fabricationxList = fabricationxList.Distinct().ToList();
             Fabrications.Clear();
@@ -102,6 +104,7 @@ namespace GestionOceanBijoux.ViewModels
             {
                 Fabrications.Add(fabrication);
             }
+
             IsLoading = false;
         }
 

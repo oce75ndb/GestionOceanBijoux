@@ -43,7 +43,7 @@ namespace GestionOceanBijoux.ViewModels
         // Commandes
         public ICommand SupprimerProduitCommand { get; set; }
         public ICommand AjouterProduitCommand { get; set; }
-        public ICommand EnregistrerModificationsProduitCommand { get; set; }
+        public ICommand EnregistrerProduitCommand { get; set; }
 
         public ProduitViewModel()
         {
@@ -85,7 +85,7 @@ namespace GestionOceanBijoux.ViewModels
                 };
 
                 Produit createdProduit = await _apiService.AddProduitAsync(nouveau);
-                if (createdProduit!=null)
+                if (createdProduit != null)
                 {
                     Produits.Add(createdProduit);
                     MessageBox.Show($"Produit ajouté avec ID {createdProduit.id} !");
@@ -98,15 +98,13 @@ namespace GestionOceanBijoux.ViewModels
                     StyleId = 0;
                     MateriauId = 0;
                     FabricationId = 0;
-                    //OnPropertyChanged(nameof(NomProduit));
-                    //OnPropertyChanged(nameof(PrixProduit));
-                    //OnPropertyChanged(nameof(StockProduit));
+
                 }
                 else
                     MessageBox.Show("Erreur lors de l'ajout du produit.");
             });
 
-            EnregistrerModificationsProduitCommand = new RelayCommand(async (obj) =>
+            EnregistrerProduitCommand = new RelayCommand(async (obj) =>
             {
                 if (obj is Produit produit)
                 {
@@ -130,6 +128,7 @@ namespace GestionOceanBijoux.ViewModels
         private async Task LoadData()
         {
             IsLoading = true;
+
             var produitlist = await _apiService.GetProduitsAsync();
             produitlist = produitlist.Distinct().ToList();
             Produits.Clear();
@@ -169,6 +168,7 @@ namespace GestionOceanBijoux.ViewModels
             {
                 Fabrications.Add(fabrication);
             }
+
             IsLoading = false;
         }
 

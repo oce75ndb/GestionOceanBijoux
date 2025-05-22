@@ -32,6 +32,7 @@ namespace GestionOceanBijoux.ViewModels
             set { _materiaux = value; OnPropertyChanged(nameof(Materiau)); }
         }
 
+        // Valeur pour ajouter un matériau
         private string _materiau;
         public string Materiau
         {
@@ -89,12 +90,13 @@ namespace GestionOceanBijoux.ViewModels
                 }
             });
 
-            LoadMateriaux();
+            _ = LoadMateriaux();
         }
 
         private async Task LoadMateriaux()
         {
             IsLoading = true;
+
             var materiauxList = await _apiService.GetMateriauxAsync();
             materiauxList = materiauxList.Distinct().ToList();
             Materiaux.Clear();
@@ -102,6 +104,7 @@ namespace GestionOceanBijoux.ViewModels
             {
                 Materiaux.Add(materiau);
             }
+
             IsLoading = false;
         }
 

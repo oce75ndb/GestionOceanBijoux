@@ -32,6 +32,7 @@ namespace GestionOceanBijoux.ViewModels
             set { _styles = value; OnPropertyChanged(nameof(Style)); }
         }
 
+        // Valeur pout ajouter un style
         private string _style;
         public string Style
         {
@@ -89,12 +90,13 @@ namespace GestionOceanBijoux.ViewModels
                 }
             });
 
-            LoadStyles();
+            _ = LoadStyles();
         }
 
         private async Task LoadStyles()
         {
             IsLoading = true;
+
             var stylesList = await _apiService.GetStylesAsync();
             stylesList = stylesList.Distinct().ToList();
             Styles.Clear();
@@ -102,6 +104,7 @@ namespace GestionOceanBijoux.ViewModels
             {
                 Styles.Add(style);
             }
+
             IsLoading = false;
         }
 
