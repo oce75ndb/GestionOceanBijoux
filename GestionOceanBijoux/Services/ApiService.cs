@@ -91,9 +91,18 @@ namespace GestionOceanBijoux.Services
                 throw new Exception("Erreur lors de la récupération ou de la désérialisation des produits : " + ex.Message);
             }
         }
+
         public async Task<Produit> AddProduitAsync(Produit produit)
         {
             string url = apiUrl + "/produits";
+
+            // Gestion du token
+            string token = Settings.Default.UserToken;
+            if (string.IsNullOrEmpty(token))
+                throw new Exception("Token non disponible. Veuillez vous reconnecter.");
+            client.DefaultRequestHeaders.Authorization =
+                new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+
             var jsonContent = new StringContent(JsonSerializer.Serialize(produit), System.Text.Encoding.UTF8, "application/json");
             HttpResponseMessage response = await client.PostAsync(url, jsonContent);
 
@@ -101,17 +110,25 @@ namespace GestionOceanBijoux.Services
             {
                 var result = await response.Content.ReadAsStringAsync();
                 var createdProduit = JsonSerializer.Deserialize<Produit>(result);
-
                 return createdProduit;
             }
             else
                 return null;
         }
+
         public async Task<bool> UpdateProduitAsync(Produit produit)
         {
             try
             {
-                string url = apiUrl + $"/produits{produit.id}";
+                string url = apiUrl + $"/produits/{produit.id}";
+
+                // Gestion du token
+                string token = Settings.Default.UserToken;
+                if (string.IsNullOrEmpty(token))
+                    throw new Exception("Token non disponible. Veuillez vous reconnecter.");
+                client.DefaultRequestHeaders.Authorization =
+                    new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+
                 var jsonContent = new StringContent(JsonSerializer.Serialize(produit), System.Text.Encoding.UTF8, "application/json");
                 HttpResponseMessage response = await client.PutAsync(url, jsonContent);
                 return response.IsSuccessStatusCode;
@@ -121,11 +138,20 @@ namespace GestionOceanBijoux.Services
                 throw new Exception("Erreur lors de la modification du produit : " + ex.Message);
             }
         }
+
         public async Task<bool> DeleteProduitAsync(int id)
         {
             try
             {
                 string url = apiUrl + $"/produits/{id}";
+
+                // Gestion du token
+                string token = Settings.Default.UserToken;
+                if (string.IsNullOrEmpty(token))
+                    throw new Exception("Token non disponible. Veuillez vous reconnecter.");
+                client.DefaultRequestHeaders.Authorization =
+                    new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+
                 HttpResponseMessage response = await client.DeleteAsync(url);
                 return response.IsSuccessStatusCode;
             }
@@ -159,10 +185,18 @@ namespace GestionOceanBijoux.Services
                 throw new Exception("Erreur lors de la récupération ou de la désérialisation des catégories : " + ex.Message);
             }
         }
+
         public async Task<Categorie> AddCategorieAsync(Categorie categorie)
         {
-
             string url = apiUrl + "/categories";
+
+            // Gestion du token
+            string token = Settings.Default.UserToken;
+            if (string.IsNullOrEmpty(token))
+                throw new Exception("Token non disponible. Veuillez vous reconnecter.");
+            client.DefaultRequestHeaders.Authorization =
+                new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+
             var jsonContent = new StringContent(JsonSerializer.Serialize(categorie), System.Text.Encoding.UTF8, "application/json");
             HttpResponseMessage response = await client.PostAsync(url, jsonContent);
 
@@ -170,17 +204,25 @@ namespace GestionOceanBijoux.Services
             {
                 var result = await response.Content.ReadAsStringAsync();
                 var createdCategorie = JsonSerializer.Deserialize<Categorie>(result);
-
                 return createdCategorie;
             }
             else
                 return null;
         }
+
         public async Task<bool> UpdateCategoriesAsync(Produit categorie)
         {
             try
             {
-                string url = apiUrl + $"/categories{categorie.id}";
+                string url = apiUrl + $"/categories/{categorie.id}";
+
+                // Gestion du token
+                string token = Settings.Default.UserToken;
+                if (string.IsNullOrEmpty(token))
+                    throw new Exception("Token non disponible. Veuillez vous reconnecter.");
+                client.DefaultRequestHeaders.Authorization =
+                    new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+
                 var jsonContent = new StringContent(JsonSerializer.Serialize(categorie), System.Text.Encoding.UTF8, "application/json");
                 HttpResponseMessage response = await client.PutAsync(url, jsonContent);
                 return response.IsSuccessStatusCode;
@@ -190,11 +232,20 @@ namespace GestionOceanBijoux.Services
                 throw new Exception("Erreur lors de la modification de la catégorie : " + ex.Message);
             }
         }
+
         public async Task<bool> DeleteCategorieAsync(int id)
         {
             try
             {
                 string url = apiUrl + $"/categories/{id}";
+
+                // Gestion du token
+                string token = Settings.Default.UserToken;
+                if (string.IsNullOrEmpty(token))
+                    throw new Exception("Token non disponible. Veuillez vous reconnecter.");
+                client.DefaultRequestHeaders.Authorization =
+                    new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+
                 HttpResponseMessage response = await client.DeleteAsync(url);
                 return response.IsSuccessStatusCode;
             }
@@ -324,10 +375,18 @@ namespace GestionOceanBijoux.Services
                 throw new Exception("Erreur lors de la récupération ou de la désérialisation des matériaux : " + ex.Message);
             }
         }
+
         public async Task<Materiau> AddMateriauAsync(Materiau materiau)
         {
-
             string url = apiUrl + "/materiaux";
+
+            // Gestion du token
+            string token = Settings.Default.UserToken;
+            if (string.IsNullOrEmpty(token))
+                throw new Exception("Token non disponible. Veuillez vous reconnecter.");
+            client.DefaultRequestHeaders.Authorization =
+                new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+
             var jsonContent = new StringContent(JsonSerializer.Serialize(materiau), System.Text.Encoding.UTF8, "application/json");
             HttpResponseMessage response = await client.PostAsync(url, jsonContent);
 
@@ -335,17 +394,25 @@ namespace GestionOceanBijoux.Services
             {
                 var result = await response.Content.ReadAsStringAsync();
                 var createdMateriau = JsonSerializer.Deserialize<Materiau>(result);
-
                 return createdMateriau;
             }
             else
                 return null;
         }
+
         public async Task<bool> DeleteMateriauAsync(int id)
         {
             try
             {
                 string url = apiUrl + $"/materiaux/{id}";
+
+                // Gestion du token
+                string token = Settings.Default.UserToken;
+                if (string.IsNullOrEmpty(token))
+                    throw new Exception("Token non disponible. Veuillez vous reconnecter.");
+                client.DefaultRequestHeaders.Authorization =
+                    new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+
                 HttpResponseMessage response = await client.DeleteAsync(url);
                 return response.IsSuccessStatusCode;
             }
@@ -379,10 +446,18 @@ namespace GestionOceanBijoux.Services
                 throw new Exception("Erreur lors de la récupération ou de la désérialisation des fabrications : " + ex.Message);
             }
         }
+
         public async Task<Fabrication> AddFabricationAsync(Fabrication fabrication)
         {
-
             string url = apiUrl + "/fabrications";
+
+            // Gestion du token
+            string token = Settings.Default.UserToken;
+            if (string.IsNullOrEmpty(token))
+                throw new Exception("Token non disponible. Veuillez vous reconnecter.");
+            client.DefaultRequestHeaders.Authorization =
+                new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+
             var jsonContent = new StringContent(JsonSerializer.Serialize(fabrication), System.Text.Encoding.UTF8, "application/json");
             HttpResponseMessage response = await client.PostAsync(url, jsonContent);
 
@@ -390,17 +465,25 @@ namespace GestionOceanBijoux.Services
             {
                 var result = await response.Content.ReadAsStringAsync();
                 var createdFabrication = JsonSerializer.Deserialize<Fabrication>(result);
-
                 return createdFabrication;
             }
             else
                 return null;
         }
+
         public async Task<bool> DeleteFabricationAsync(int id)
         {
             try
             {
                 string url = apiUrl + $"/fabrications/{id}";
+
+                // Gestion du token
+                string token = Settings.Default.UserToken;
+                if (string.IsNullOrEmpty(token))
+                    throw new Exception("Token non disponible. Veuillez vous reconnecter.");
+                client.DefaultRequestHeaders.Authorization =
+                    new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+
                 HttpResponseMessage response = await client.DeleteAsync(url);
                 return response.IsSuccessStatusCode;
             }
