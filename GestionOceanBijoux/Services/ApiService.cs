@@ -1,6 +1,7 @@
 ﻿using GestionOceanBijoux.Models;
 using System.Configuration;
 using System.Net.Http;
+using System.Text;
 using System.Text.Json;
 
 namespace GestionOceanBijoux.Services
@@ -25,6 +26,46 @@ namespace GestionOceanBijoux.Services
                 Timeout = TimeSpan.FromSeconds(30),
             };
         }
+
+
+        public async Task<string> LoginAsync(string email, string password)
+        {
+            var loginData = new
+            {
+                email = email,
+                password = password
+            };
+
+
+            var content = new StringContent(JsonSerializer.Serialize(loginData), Encoding.UTF8, "application/json");
+
+            var response = await client.PostAsync($"{apiUrl}/login", content);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var responseData = await response.Content.ReadAsStringAsync();
+
+                using (JsonDocument document = JsonDocument.Parse(responseData))
+                {
+                    JsonElement root = document.RootElement;
+
+                    if (root.TryGetProperty("token", out JsonElement tokenElement))
+                    {
+                        string token = tokenElement.GetString(); // GetString() converts the JSON string value to a C# string
+                        Console.WriteLine($"Token (JsonDocument): {token}");
+                        return token; // You would return the token here
+                    }
+                    else
+                    {
+                        Console.WriteLine("Token property not found in the JSON response.");
+                        // Handle error: token not found
+                    }
+                }
+            }
+
+            return null;
+        }
+
 
         // Produits
         public async Task<List<Produit>> GetProduitsAsync()
@@ -191,6 +232,13 @@ namespace GestionOceanBijoux.Services
         {
 
             string url = apiUrl + "/styles";
+            string token = Settings.Default.UserToken;
+            if (string.IsNullOrEmpty(token))
+                throw new Exception("Token non disponible. Veuillez vous reconnecter.");
+
+            client.DefaultRequestHeaders.Authorization =
+                new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+
             var jsonContent = new StringContent(JsonSerializer.Serialize(style), System.Text.Encoding.UTF8, "application/json");
             HttpResponseMessage response = await client.PostAsync(url, jsonContent);
 

@@ -32,7 +32,7 @@ namespace GestionOceanBijoux.ViewModels
 
         // Champs pour l'ajout
         public string NomProduit { get; set; } = string.Empty;
-        public string PrixProduit { get; set; } = string.Empty;
+        public decimal PrixProduit { get; set; } 
         public int StockProduit { get; set; }
         public int CategorieId { get; set; }
         public int StyleId { get; set; }
@@ -92,7 +92,7 @@ namespace GestionOceanBijoux.ViewModels
                     
                     // Remise à 0 des champs
                     NomProduit = string.Empty;
-                    PrixProduit = string.Empty;
+                    PrixProduit = 0;
                     StockProduit = 0;
                     CategorieId = 0;
                     StyleId = 0;
