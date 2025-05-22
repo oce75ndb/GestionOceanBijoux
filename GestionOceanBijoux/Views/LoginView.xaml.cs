@@ -31,6 +31,7 @@ namespace GestionOceanBijoux.Views
             {
                 Settings.Default.UserToken = token;
                 Settings.Default.Save(); // Sauvegarder les paramètres
+                //MessageBox.Show(Settings.Default.UserToken);    
                 MainWindow mainWindow = new MainWindow();
 
                 this.Close();

@@ -253,6 +253,31 @@ namespace GestionOceanBijoux.Services
             else
                 return null;
         }
+        public async Task<Style> UpdateStyleAsync(Style style)
+        {
+
+            string url = apiUrl + $"/styles/{style.id}";
+
+            //Gestion du token
+            string token = Settings.Default.UserToken;
+            if (string.IsNullOrEmpty(token))
+                throw new Exception("Token non disponible. Veuillez vous reconnecter.");
+            client.DefaultRequestHeaders.Authorization =
+                new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+
+            var jsonContent = new StringContent(JsonSerializer.Serialize(style), System.Text.Encoding.UTF8, "application/json");
+            HttpResponseMessage response = await client.PutAsync(url, jsonContent);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var result = await response.Content.ReadAsStringAsync();
+                var modifiedStyle = JsonSerializer.Deserialize<Style>(result);
+
+                return modifiedStyle;
+            }
+            else
+                return null;
+        }
         public async Task<bool> DeleteStyleAsync(int id)
         {
             try

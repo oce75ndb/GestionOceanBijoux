@@ -96,7 +96,7 @@ namespace GestionOceanBijoux.ViewModels
                 if (!string.IsNullOrWhiteSpace(Style))
                 {
                     var nouvelle = new Style { style = Style };
-                    Style createdStyle = await _apiService.AddStyleAsync(nouvelle);
+                    Style createdStyle = await _apiService.UpdateStyleAsync(nouvelle);
 
                     if (createdStyle != null)
                     {

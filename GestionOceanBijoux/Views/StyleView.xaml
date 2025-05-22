@@ -38,7 +38,7 @@
             Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibilityConverter}}" Foreground="{StaticResource AccentBrush}" Background="{StaticResource PrimaryBrush}"/>
 
         <!-- DATAGRID DES STYLES -->
-        <DataGrid Grid.Row="2" ItemsSource="{Binding Styles}" Width="Auto" Height="Auto" Margin="20" AutoGenerateColumns="False" IsReadOnly="True">
+        <DataGrid Grid.Row="2" ItemsSource="{Binding Styles}" Width="Auto" Height="Auto" Margin="20" AutoGenerateColumns="False" IsReadOnly="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding id}" Width="80"/>
                 <DataGridTextColumn Header="Style" Binding="{Binding style}" Width="*"/>
