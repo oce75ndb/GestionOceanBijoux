@@ -232,10 +232,11 @@ namespace GestionOceanBijoux.Services
         {
 
             string url = apiUrl + "/styles";
+
+            //Gestion du token
             string token = Settings.Default.UserToken;
             if (string.IsNullOrEmpty(token))
                 throw new Exception("Token non disponible. Veuillez vous reconnecter.");
-
             client.DefaultRequestHeaders.Authorization =
                 new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
 
@@ -257,6 +258,14 @@ namespace GestionOceanBijoux.Services
             try
             {
                 string url = apiUrl + $"/styles/{id}";
+
+                //Gestion du token
+                string token = Settings.Default.UserToken;
+                if (string.IsNullOrEmpty(token))
+                    throw new Exception("Token non disponible. Veuillez vous reconnecter.");
+                client.DefaultRequestHeaders.Authorization =
+                    new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+
                 HttpResponseMessage response = await client.DeleteAsync(url);
                 return response.IsSuccessStatusCode;
             }

@@ -42,6 +42,7 @@ namespace GestionOceanBijoux.ViewModels
 
         public ICommand SupprimerStyleCommand { get; set; }
         public ICommand AjouterStyleCommand { get; set; }
+        public ICommand EnregistrerStyleCommand { get; set; }
 
         public StyleViewModel()
         {
@@ -87,6 +88,24 @@ namespace GestionOceanBijoux.ViewModels
                     }
                     else
                         MessageBox.Show("Erreur lors de l'ajout du style.");                   
+                }
+            });
+
+            EnregistrerStyleCommand = new RelayCommand(async (obj) =>
+            {
+                if (!string.IsNullOrWhiteSpace(Style))
+                {
+                    var nouvelle = new Style { style = Style };
+                    Style createdStyle = await _apiService.AddStyleAsync(nouvelle);
+
+                    if (createdStyle != null)
+                    {
+                        Styles.Add(createdStyle);
+                        MessageBox.Show($"Style modifié avec ID {createdStyle.id} !");
+                        Style = "";
+                    }
+                    else
+                        MessageBox.Show("Erreur lors de la modification du style.");
                 }
             });
 
