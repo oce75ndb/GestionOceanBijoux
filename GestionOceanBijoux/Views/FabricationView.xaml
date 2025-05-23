@@ -34,14 +34,19 @@
             Visibility="{Binding IsLoading, Converter={StaticResource BoolToVisibilityConverter}}" Foreground="{StaticResource AccentBrush}" Background="{StaticResource PrimaryBrush}"/>
 
         <!-- DATAGRID DES FABRICATIONS -->
-        <DataGrid Grid.Row="2" ItemsSource="{Binding Fabrications}" Width="Auto" Height="Auto" Margin="20" AutoGenerateColumns="False" IsReadOnly="True">
+        <DataGrid Grid.Row="2" ItemsSource="{Binding Fabrications}" Width="Auto" Height="Auto" Margin="20" AutoGenerateColumns="False" >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding id}" Width="80"/>
-                <DataGridTextColumn Header="Fabrication" Binding="{Binding fabrication}" Width="*"/>
+                <DataGridTextColumn Header="Fabrication" Binding="{Binding fabrication, UpdateSourceTrigger=PropertyChanged}" Width="*"/>
                 <DataGridTemplateColumn Header="Supprimer" Width="60">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Content="🗑" Command="{Binding DataContext.SupprimerFabricationCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}" CommandParameter="{Binding}" Padding="5" ToolTip="Supprimer cette fabrication"/>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                <Button Content="💾" Background="#C4E1C1" Foreground="Black" Padding="5"
+                                    Command="{Binding DataContext.EnregistrerFabricationCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}" CommandParameter="{Binding}" 
+                                        ToolTip="Enregistrer les modifications" />
+                                <Button Content="🗑" Command="{Binding DataContext.SupprimerFabricationCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}" CommandParameter="{Binding}" Padding="5" ToolTip="Supprimer cette fabrication"/>
+                            </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

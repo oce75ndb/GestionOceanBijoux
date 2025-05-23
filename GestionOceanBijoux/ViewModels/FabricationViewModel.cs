@@ -42,6 +42,7 @@ namespace GestionOceanBijoux.ViewModels
 
         public ICommand SupprimerFabricationCommand { get; set; }
         public ICommand AjouterFabricationCommand { get; set; }
+        public ICommand EnregistrerFabricationCommand { get; set; }
 
         public FabricationViewModel()
         {
@@ -71,7 +72,6 @@ namespace GestionOceanBijoux.ViewModels
                     }
                 }
             });
-
             AjouterFabricationCommand = new RelayCommand(async (obj) =>
             {
                 if (!string.IsNullOrWhiteSpace(Fabrication))
@@ -87,6 +87,21 @@ namespace GestionOceanBijoux.ViewModels
                     }
                     else
                         MessageBox.Show("Erreur lors de l'ajout de la fabrication.");                   
+                }
+            });
+            EnregistrerFabricationCommand = new RelayCommand(async (obj) =>
+            {
+                if (null != obj)
+                {
+                    var fabrication = (Fabrication)obj;
+                    Fabrication updatedFabrication = await _apiService.UpdateFabricationAsync(fabrication);
+
+                    if (updatedFabrication != null)
+                    {
+                        MessageBox.Show($"Fabrication modifiée avec ID {updatedFabrication.id} !");
+                    }
+                    else
+                        MessageBox.Show("Erreur lors de la modification de la fabrication.");
                 }
             });
 

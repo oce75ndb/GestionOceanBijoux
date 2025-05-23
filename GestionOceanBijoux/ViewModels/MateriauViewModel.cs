@@ -105,7 +105,6 @@ namespace GestionOceanBijoux.ViewModels
                 }
             });
 
-
             _ = LoadMateriaux();
         }
 
