@@ -42,6 +42,7 @@ namespace GestionOceanBijoux.ViewModels
 
         public ICommand SupprimerMateriauCommand { get; set; }
         public ICommand AjouterMateriauCommand { get; set; }
+        public ICommand EnregistrerMateriauCommand { get; set; }
 
         public MateriauViewModel()
         {
@@ -71,7 +72,6 @@ namespace GestionOceanBijoux.ViewModels
                     }
                 }
             });
-
             AjouterMateriauCommand = new RelayCommand(async (obj) =>
             {
                 if (!string.IsNullOrWhiteSpace(Materiau))
@@ -89,6 +89,22 @@ namespace GestionOceanBijoux.ViewModels
                         MessageBox.Show("Erreur lors de l'ajout du matériau.");                   
                 }
             });
+            EnregistrerMateriauCommand = new RelayCommand(async (obj) =>
+            {
+                if (null != obj)
+                {
+                    var materiau = (Materiau)obj;
+                    Materiau updatedMateriau = await _apiService.UpdateMateriauAsync(materiau);
+
+                    if (updatedMateriau != null)
+                    {
+                        MessageBox.Show($"Materiau modifié avec ID {updatedMateriau.id} !");
+                    }
+                    else
+                        MessageBox.Show("Erreur lors de la modification du materiau.");
+                }
+            });
+
 
             _ = LoadMateriaux();
         }

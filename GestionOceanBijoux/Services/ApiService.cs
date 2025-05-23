@@ -205,27 +205,30 @@ namespace GestionOceanBijoux.Services
             else
                 return null;
         }
-        public async Task<bool> UpdateCategoriesAsync(Produit categorie)
+        public async Task<Categorie> UpdateCategorieAsync(Categorie categorie)
         {
-            try
-            {
-                string url = apiUrl + $"/categories/{categorie.id}";
 
-                // Gestion du token
-                string token = Settings.Default.UserToken;
-                if (string.IsNullOrEmpty(token))
-                    throw new Exception("Token non disponible. Veuillez vous reconnecter.");
-                client.DefaultRequestHeaders.Authorization =
-                    new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+            string url = apiUrl + $"/categories/{categorie.id}";
 
-                var jsonContent = new StringContent(JsonSerializer.Serialize(categorie), System.Text.Encoding.UTF8, "application/json");
-                HttpResponseMessage response = await client.PutAsync(url, jsonContent);
-                return response.IsSuccessStatusCode;
-            }
-            catch (Exception ex)
+            //Gestion du token
+            string token = Settings.Default.UserToken;
+            if (string.IsNullOrEmpty(token))
+                throw new Exception("Token non disponible. Veuillez vous reconnecter.");
+            client.DefaultRequestHeaders.Authorization =
+                new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+
+            var jsonContent = new StringContent(JsonSerializer.Serialize(categorie), System.Text.Encoding.UTF8, "application/json");
+            HttpResponseMessage response = await client.PutAsync(url, jsonContent);
+
+            if (response.IsSuccessStatusCode)
             {
-                throw new Exception("Erreur lors de la modification de la catégorie : " + ex.Message);
+                var result = await response.Content.ReadAsStringAsync();
+                var modifiedCategorie = JsonSerializer.Deserialize<Categorie>(result);
+
+                return modifiedCategorie;
             }
+            else
+                return null;
         }
         public async Task<bool> DeleteCategorieAsync(int id)
         {
@@ -392,6 +395,31 @@ namespace GestionOceanBijoux.Services
             else
                 return null;
         }
+        public async Task<Materiau> UpdateMateriauAsync(Materiau materiau)
+        {
+
+            string url = apiUrl + $"/materiaux/{materiau.id}";
+
+            //Gestion du token
+            string token = Settings.Default.UserToken;
+            if (string.IsNullOrEmpty(token))
+                throw new Exception("Token non disponible. Veuillez vous reconnecter.");
+            client.DefaultRequestHeaders.Authorization =
+                new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+
+            var jsonContent = new StringContent(JsonSerializer.Serialize(materiau), System.Text.Encoding.UTF8, "application/json");
+            HttpResponseMessage response = await client.PutAsync(url, jsonContent);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var result = await response.Content.ReadAsStringAsync();
+                var modifiedMateriau = JsonSerializer.Deserialize<Materiau>(result);
+
+                return modifiedMateriau;
+            }
+            else
+                return null;
+        }
         public async Task<bool> DeleteMateriauAsync(int id)
         {
             try
@@ -457,6 +485,31 @@ namespace GestionOceanBijoux.Services
                 var result = await response.Content.ReadAsStringAsync();
                 var createdFabrication = JsonSerializer.Deserialize<Fabrication>(result);
                 return createdFabrication;
+            }
+            else
+                return null;
+        }
+        public async Task<Fabrication> UpdateFabricationAsync(Fabrication fabrication)
+        {
+
+            string url = apiUrl + $"/fabrications/{fabrication.id}";
+
+            //Gestion du token
+            string token = Settings.Default.UserToken;
+            if (string.IsNullOrEmpty(token))
+                throw new Exception("Token non disponible. Veuillez vous reconnecter.");
+            client.DefaultRequestHeaders.Authorization =
+                new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+
+            var jsonContent = new StringContent(JsonSerializer.Serialize(fabrication), System.Text.Encoding.UTF8, "application/json");
+            HttpResponseMessage response = await client.PutAsync(url, jsonContent);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var result = await response.Content.ReadAsStringAsync();
+                var modifiedFabrication = JsonSerializer.Deserialize<Fabrication>(result);
+
+                return modifiedFabrication;
             }
             else
                 return null;
