@@ -41,7 +41,7 @@
         <DataGrid Grid.Row="2" ItemsSource="{Binding Styles}" Width="Auto" Height="Auto" Margin="20" AutoGenerateColumns="False" IsReadOnly="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding id}" Width="80"/>
-                <DataGridTextColumn Header="Style" Binding="{Binding style}" Width="*"/>
+                <DataGridTextColumn Header="Style" Binding="{Binding style, UpdateSourceTrigger=PropertyChanged}" Width="*"/>
                 <!-- Boutons -->
                 <DataGridTemplateColumn Width="60">
                     <DataGridTemplateColumn.CellTemplate>

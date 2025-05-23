@@ -91,7 +91,6 @@ namespace GestionOceanBijoux.Services
                 throw new Exception("Erreur lors de la récupération ou de la désérialisation des produits : " + ex.Message);
             }
         }
-
         public async Task<Produit> AddProduitAsync(Produit produit)
         {
             string url = apiUrl + "/produits";
@@ -115,7 +114,6 @@ namespace GestionOceanBijoux.Services
             else
                 return null;
         }
-
         public async Task<bool> UpdateProduitAsync(Produit produit)
         {
             try
@@ -138,7 +136,6 @@ namespace GestionOceanBijoux.Services
                 throw new Exception("Erreur lors de la modification du produit : " + ex.Message);
             }
         }
-
         public async Task<bool> DeleteProduitAsync(int id)
         {
             try
@@ -185,7 +182,6 @@ namespace GestionOceanBijoux.Services
                 throw new Exception("Erreur lors de la récupération ou de la désérialisation des catégories : " + ex.Message);
             }
         }
-
         public async Task<Categorie> AddCategorieAsync(Categorie categorie)
         {
             string url = apiUrl + "/categories";
@@ -209,7 +205,6 @@ namespace GestionOceanBijoux.Services
             else
                 return null;
         }
-
         public async Task<bool> UpdateCategoriesAsync(Produit categorie)
         {
             try
@@ -232,7 +227,6 @@ namespace GestionOceanBijoux.Services
                 throw new Exception("Erreur lors de la modification de la catégorie : " + ex.Message);
             }
         }
-
         public async Task<bool> DeleteCategorieAsync(int id)
         {
             try
@@ -375,7 +369,6 @@ namespace GestionOceanBijoux.Services
                 throw new Exception("Erreur lors de la récupération ou de la désérialisation des matériaux : " + ex.Message);
             }
         }
-
         public async Task<Materiau> AddMateriauAsync(Materiau materiau)
         {
             string url = apiUrl + "/materiaux";
@@ -399,7 +392,6 @@ namespace GestionOceanBijoux.Services
             else
                 return null;
         }
-
         public async Task<bool> DeleteMateriauAsync(int id)
         {
             try
@@ -446,7 +438,6 @@ namespace GestionOceanBijoux.Services
                 throw new Exception("Erreur lors de la récupération ou de la désérialisation des fabrications : " + ex.Message);
             }
         }
-
         public async Task<Fabrication> AddFabricationAsync(Fabrication fabrication)
         {
             string url = apiUrl + "/fabrications";
@@ -470,7 +461,6 @@ namespace GestionOceanBijoux.Services
             else
                 return null;
         }
-
         public async Task<bool> DeleteFabricationAsync(int id)
         {
             try

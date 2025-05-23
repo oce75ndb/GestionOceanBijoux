@@ -72,7 +72,6 @@ namespace GestionOceanBijoux.ViewModels
                     }
                 }
             });
-
             AjouterStyleCommand = new RelayCommand(async (obj) =>
             {
                 if (!string.IsNullOrWhiteSpace(Style))
@@ -90,18 +89,17 @@ namespace GestionOceanBijoux.ViewModels
                         MessageBox.Show("Erreur lors de l'ajout du style.");                   
                 }
             });
-
             EnregistrerStyleCommand = new RelayCommand(async (obj) =>
             {
-                if (!string.IsNullOrWhiteSpace(Style))
+                if (null != obj)
                 {
-                    var nouvelle = new Style { style = Style };
-                    Style createdStyle = await _apiService.UpdateStyleAsync(nouvelle);
+                    var style = (Style)obj;
+                    Style updatedStyle = await _apiService.UpdateStyleAsync(style);
 
-                    if (createdStyle != null)
+                    if (updatedStyle != null)
                     {
-                        Styles.Add(createdStyle);
-                        MessageBox.Show($"Style modifié avec ID {createdStyle.id} !");
+                        //Styles.Add(updatedStyle);
+                        MessageBox.Show($"Style modifié avec ID {updatedStyle.id} !");
                         Style = "";
                     }
                     else
