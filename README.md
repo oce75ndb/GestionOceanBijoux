@@ -1,44 +1,48 @@
-```markdown
+
 # GestionOceanBijoux
 
-GestionOceanBijoux est une application de bureau développée en C# avec WPF (.NET 8), reposant sur l’architecture MVVM. Elle permet de gérer les produits, catégories, matériaux, styles et fabrications d’un site e-commerce fictif de bijoux, via une API Laravel distante.
+**GestionOceanBijoux** est une application de bureau développée en C# avec WPF (.NET 8), suivant le modèle d'architecture MVVM. Ellae permet de gérer les données d’un site e-commerce fictif spécialisé dans les bijoux, via une API Laravel.
+
+## Présentation
+
+Ce projet a été réalisé dans le cadre du BTS SIO SLAM. Il permet de consulter, ajouter, modifier et supprimer des produits, catégories, matériaux, styles et fabrications. L'application se connecte à une API distante pour récupérer et envoyer les données.
 
 ## Technologies utilisées
 
-- WPF .NET 8  
-- MVVM (Model - View - ViewModel)  
-- C# / XAML  
-- API REST (consommée via HttpClient)  
-- JSON (avec System.Text.Json)  
-- Git (hébergement GitHub)
+- .NET 8 (WPF)
+- C# / XAML
+- MVVM (Model - View - ViewModel)
+- API RESTful (via HttpClient)
+- JSON (System.Text.Json)
+- Git / GitHub
 
-## Fonctionnalités principales
+## Fonctionnalités
 
-- Affichage et gestion des produits, catégories, matériaux, styles et fabrications  
-- Connexion à une API Laravel : récupération et envoi de données (GET, POST, PUT, DELETE)  
-- Interface graphique en XAML  
-- Architecture MVVM claire, facilitant la maintenance et les évolutions
+- Connexion à une API Laravel distante
+- Affichage dynamique des données (produits, catégories, etc.)
+- Formulaires d’ajout et de modification
+- Suppression d’éléments avec confirmation
+- Navigation entre les différentes vues
+- Rafraîchissement automatique après chaque opération
 
 ## Architecture du projet
 
-Le projet est structuré selon le modèle MVVM, avec séparation claire entre les modèles de données, la logique de présentation et l’interface utilisateur.
+Le projet est structuré de façon modulaire selon le modèle MVVM :
 
 ```
-
 GestionOceanBijoux/
 │
-├── Models/         → Entités métiers (Produit, Categorie, etc.)
-├── Views/          → Interfaces utilisateur (XAML)
-├── ViewModels/     → Logique métier liée à l'affichage
-├── Services/       → Communication avec l’API Laravel
+├── Models/         → Représentation des entités (Produit, Categorie, etc.)
+├── Views/          → Interfaces graphiques (XAML)
+├── ViewModels/     → Logique métier et gestion de l’état des vues
+├── Services/       → Requêtes vers l’API Laravel
 ├── Helpers/        → Méthodes utilitaires
-└── MainWindow/     → Fenêtre principale avec navigation
+└── MainWindow/     → Fenêtre principale et gestion de la navigation
+```
 
-````
+## Exemple de logique
 
-## Exemples de code
-
-### Appel API – `ApiService.cs`
+**Extrait de `ApiService.cs`** – Récupération des produits depuis l’API :
 
 ```csharp
 public async Task<List<Produit>> GetProduitsAsync()
@@ -47,54 +51,43 @@ public async Task<List<Produit>> GetProduitsAsync()
     HttpResponseMessage response = await client.GetAsync(url);
     if (response.IsSuccessStatusCode)
     {
-        string jsonString = await response.Content.ReadAsStringAsync();
-        return JsonSerializer.Deserialize<List<Produit>>(jsonString) ?? new List<Produit>();
+        string json = await response.Content.ReadAsStringAsync();
+        return JsonSerializer.Deserialize<List<Produit>>(json) ?? new List<Produit>();
     }
     throw new Exception("Erreur API : " + response.ReasonPhrase);
 }
-````
+```
 
-### Exemple de ViewModel – `ProduitViewModel.cs`
+**Extrait de `ProduitViewModel.cs`** – Ajout d’un produit :
 
 ```csharp
-public class ProduitViewModel : INotifyPropertyChanged
+private async void AjouterProduit()
 {
-    public ObservableCollection<Produit> Produits { get; set; } = new();
-    public Produit ProduitSelectionne { get; set; } = new();
-
-    public ICommand AjouterCommand => new RelayCommand(AjouterProduit);
-    public ICommand SupprimerCommand => new RelayCommand(SupprimerProduit);
-
-    private async void AjouterProduit()
-    {
-        await apiService.AddProduitAsync(ProduitSelectionne);
-        await ChargerProduits();
-    }
+    await apiService.AddProduitAsync(ProduitSelectionne);
+    await ChargerProduits();
 }
 ```
 
-## Pages et vues disponibles
+## Vues disponibles
 
-| Vue             | Description                          |
-| --------------- | ------------------------------------ |
-| MainWindow      | Fenêtre principale et navigation     |
-| LoginView       | Interface de connexion (optionnelle) |
-| ProduitView     | Gestion des produits                 |
-| CategorieView   | Gestion des catégories               |
-| StyleView       | Gestion des styles                   |
-| MateriauView    | Gestion des matériaux                |
-| FabricationView | Gestion des fabrications             |
+| Vue              | Description                             |
+|------------------|-----------------------------------------|
+| `MainWindow`      | Fenêtre principale et navigation        |
+| `LoginView`       | Connexion utilisateur (si activée)      |
+| `ProduitView`     | Gestion des produits                    |
+| `CategorieView`   | Gestion des catégories                  |
+| `StyleView`       | Gestion des styles                      |
+| `MateriauView`    | Gestion des matériaux                   |
+| `FabricationView` | Gestion des fabrications                |
 
-## Lancer le projet
+## Lancement du projet
 
-1. Ouvrir le fichier `GestionOceanBijoux.sln` dans Visual Studio 2022 ou version supérieure
-2. Vérifier que l’API Laravel est bien active (en local ou en ligne)
-3. Adapter l’URL de base dans `ApiService.cs` si nécessaire
-4. Lancer l’application avec F5
+1. Ouvrir `GestionOceanBijoux.sln` dans Visual Studio 2022 (ou supérieur)
+2. Vérifier que l’API Laravel est bien en ligne
+3. Adapter l’URL dans `ApiService.cs` si nécessaire
+4. Lancer le projet avec F5
 
 ## À propos
 
-Projet développé par Océane Bondon dans le cadre du BTS SIO SLAM, session 2025.
-L’API utilisée est développée séparément avec Laravel, dans le projet associé *Océan de Bijoux*.
-
-```
+Projet développé par **Océane Bondon** (BTS SIO SLAM 2025).  
+Ce projet interagit avec une API Laravel développée séparément dans le cadre du site "Océan de Bijoux".
