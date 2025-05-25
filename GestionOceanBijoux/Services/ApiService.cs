@@ -3,6 +3,7 @@ using System.Configuration;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
+using System.Net.Http.Headers;
 
 namespace GestionOceanBijoux.Services
 {
@@ -25,6 +26,9 @@ namespace GestionOceanBijoux.Services
             {
                 Timeout = TimeSpan.FromSeconds(30),
             };
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
         }
 
 
@@ -72,12 +76,6 @@ namespace GestionOceanBijoux.Services
         {
             try
             {
-                string token = Settings.Default.UserToken;
-                if (string.IsNullOrEmpty(token))
-                    throw new Exception("Token non disponible. Veuillez vous reconnecter.");
-                client.DefaultRequestHeaders.Authorization =
-                    new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
-
                 string url = apiUrl + "/produits";
                 HttpResponseMessage response = await client.GetAsync(url);
 
@@ -97,7 +95,6 @@ namespace GestionOceanBijoux.Services
                 throw new Exception("Erreur lors de la récupération ou de la désérialisation des produits : " + ex.Message);
             }
         }
-
         public async Task<Produit> AddProduitAsync(Produit produit)
         {
             string url = apiUrl + "/produits";
