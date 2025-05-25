@@ -87,6 +87,15 @@ private async void AjouterProduit()
 3. Adapter l’URL dans `ApiService.cs` si nécessaire
 4. Lancer le projet avec F5
 
+## Pistes d’amélioration
+Certaines optimisations peuvent encore être envisagées pour aller plus loin :
+
+- Ajout d’un système d’authentification complet avec jetons
+- Gestion des erreurs plus détaillée côté interface
+- Mise en place de tests unitaires sur les services API
+- Amélioration du design graphique et de l’ergonomie
+- Modularisation renforcée des composants ViewModel et Services
+
 ## À propos
 
 Projet développé par **Océane Bondon** (BTS SIO SLAM 2025).  
