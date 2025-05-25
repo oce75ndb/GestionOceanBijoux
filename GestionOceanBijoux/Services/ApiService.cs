@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Net.Http.Headers;
+using System.Text.Json.Serialization;
 
 namespace GestionOceanBijoux.Services
 {
@@ -82,7 +83,12 @@ namespace GestionOceanBijoux.Services
                 if (response.IsSuccessStatusCode)
                 {
                     string jsonString = await response.Content.ReadAsStringAsync();
-                    List<Produit>? produits = JsonSerializer.Deserialize<List<Produit>>(jsonString);
+                    List<Produit>? produits = JsonSerializer.Deserialize<List<Produit>>(jsonString, new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true,
+                        NumberHandling = JsonNumberHandling.AllowReadingFromString
+                    });
+
                     return produits ?? new List<Produit>();
                 }
                 else
