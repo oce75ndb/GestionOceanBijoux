@@ -99,3 +99,28 @@ Certaines optimisations peuvent encore être envisagées pour aller plus loin :
 
 Projet développé par **Océane Bondon** (BTS SIO SLAM 2025).  
 Ce projet interagit avec une API Laravel développée séparément dans le cadre du site "Océan de Bijoux".
+
+
+## Sécurité et Authentification
+
+L'accès aux fonctionnalités sensibles (ajout, modification, suppression) est protégé par une authentification avec un token.  
+Lors de la connexion via `POST /login`, un token est généré par l’API Laravel et stocké localement dans `Settings.Default.UserToken`.
+
+Ce token est ensuite transmis automatiquement dans les en-têtes des requêtes protégées grâce au header suivant :
+
+```
+Authorization: Bearer {token}
+```
+
+## Configuration de l'API
+
+L’URL de base de l’API est stockée dans le fichier `App.config` du projet WPF :
+
+```xml
+<appSettings>
+    <add key="api_url" value="http://127.0.0.1:8000/api" />
+</appSettings>
+```
+
+Assurez-vous que l’API Laravel tourne en local ou mettez à jour cette URL selon votre environnement.
+
