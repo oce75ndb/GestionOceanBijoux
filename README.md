@@ -90,11 +90,10 @@ private async void AjouterProduit()
 ## Pistes d’amélioration
 Certaines optimisations peuvent encore être envisagées pour aller plus loin :
 
-- Ajout d’un système d’authentification complet avec jetons
-- Gestion des erreurs plus détaillée côté interface
-- Mise en place de tests unitaires sur les services API
-- Amélioration du design graphique et de l’ergonomie
-- Modularisation renforcée des composants ViewModel et Services
+- Intégrer un système de recherche ou de filtre dans les listes
+- Améliorer l'affichage des messages d’erreur ou de confirmation
+- Prévoir une pagination en cas de grand nombre de résultats
+- Amélioration du design graphique et de l’ergonomie générale
 
 ## À propos
 
